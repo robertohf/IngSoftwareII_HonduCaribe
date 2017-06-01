@@ -1,0 +1,118 @@
+<!-- top navigation -->
+<div class="top_nav">
+
+  <div class="nav_menu">
+    <nav class="" role="navigation">
+      <div class="nav toggle">
+        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+      </div>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="">
+          <% if current_user %>
+          <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <%= image_tag "img.jpg" %>Mr Jose
+            <span class=" fa fa-angle-down"></span>
+          </a>
+          <ul class="dropdown-menu dropdown-usermenu pull-right">
+            <li><a href="javascript:;">  Perfil</a>
+            </li>
+            <li>
+              <a href="javascript:;">
+                <span class="badge bg-red pull-right">100%</span>
+                <span>Configuraciones</span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;">Ayuda</a>
+          <li>
+            <%= link_to logout_path, data: {method: :delete} do %>
+            <span class="fa fa-sign-out"></span> 
+            Cerrar Sesion 
+            <% end %>
+          </li>
+          </ul>
+        </li>
+
+        <li role="presentation" class="dropdown">
+          <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-envelope-o"></i>
+            <span class="badge bg-green">6</span>
+          </a>
+          <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+            <li>
+              <a>
+                      <span class="image">
+                                        <%= image_tag "img.jpg" %>
+                                    </span>
+                      <span>
+                                        <span>Mr Jose Maria</span>
+                      <span class="time">28-Febrero-2016</span>
+                      </span>
+                      <span class="message">
+                                        Recordatoio sobre la capacitacion de los empleados
+                                        de HonduCaribe. Recuerda que ...
+                                    </span>
+              </a>
+            </li>
+            <li>
+              <a>
+                      <span class="image">
+                                       <%= image_tag "img.jpg" %>
+                                    </span>
+                                     <span>Mr Jose Maria</span>
+                      <span class="time">30-Abril-2017</span>
+                      </span>
+                      <span class="message">
+                                        Recordatoio sobre la capacitacion de los empleados
+                                        de HonduCaribe. Recuerda que ...
+                                    </span>
+              </a>
+            </li>
+            <li>
+              <a>
+                      <span class="image">
+                                       <%= image_tag "img.jpg" %>
+                                    </span>
+                      <span>
+                                     <span>Mr Jose Maria</span>
+                      <span class="time">13-Junio-2017</span>
+                      </span>
+                      <span class="message">
+                                        Recordatoio sobre la capacitacion de los empleados
+                                        de HonduCaribe. Recuerda que ....
+                                    </span>
+              </a>
+            </li>
+            <li>
+              <a>
+                      <span class="image">
+                                        <%= image_tag "img.jpg" %>
+                                    </span>
+                      <span>
+                                     <span>Mr Jose Maria</span>
+                      <span class="time">1-Agosto-2017</span>
+                      </span>
+                      <span class="message">
+                                        Recordatoio sobre la capacitacion de los empleados
+                                        de HonduCaribe. Recuerda que ...
+                                    </span>
+              </a>
+            </li>
+            <li>
+              <div class="text-center">
+                <a>
+                  <strong>Ver todos los eventos</strong>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+
+</div>
+<!-- /top navigation -->

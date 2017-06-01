@@ -1,0 +1,2 @@
+module WorkStructuresHelper
+end

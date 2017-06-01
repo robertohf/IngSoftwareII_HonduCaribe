@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  training_name: MyString
+  check_employee: false
+  check_inter: false
+  check_exteri: MyString
+
+two:
+  training_name: MyString
+  check_employee: false
+  check_inter: false
+  check_exteri: MyString

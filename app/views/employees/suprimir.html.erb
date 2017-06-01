@@ -1,0 +1,49 @@
+<div class="right_col" role="main">
+  <div class="">
+    <div class="page-title">
+      <div class="title_left">
+        <h3>Suprimir Empleado</h3>
+      </div>
+
+      <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Buscar...">
+                    <span class="input-group-btn">
+                              <button class="btn btn-default" type="button">Ir!</button>
+                          </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="row">
+
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel" style="height:900px;">
+          <div class="x_title">
+            <h2>Formulario</h2>
+            <div class="clearfix"></div>
+          </div>
+          <%= render partial: "partials/errors", locals: { obj: @employee } %>
+          <%= form_for @employee do |f| %>
+          <div class="form-group">
+            <%= f.label :supression_motive, "Razon" %>
+            <%= f.text_area :supression_motive, class: "form-control"%>
+          </div>
+            <%= f.hidden_field :employee_status, value: false %>
+            <%= f.hidden_field :supression_date, value: DateTime.now.to_date %>
+            <div class="form-group" style="margin: 0 auto; display: block;">
+              <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                <%= link_to "Cancelar", employees_path, class: "btn btn-primary" %>
+                <button class="btn btn-primary" type="reset">Reset</button>
+                <%= f.submit "Suprimir" , class: "btn btn-danger"%>
+              </div>
+            </div>
+          <%- end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

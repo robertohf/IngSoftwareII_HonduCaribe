@@ -1,0 +1,47 @@
+<div class="x_content">
+  <br />
+  <div style="width: 48%; float: left">
+  <div class="form-group">
+    <%= f.label :training_name, "Nombre" %>
+    <%= f.text_field :training_name, class: "form-control", placeholder: "Nombre de la capacitacion" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :start_date, "Fecha de Inicio" %>
+    <%= f.date_field :start_date, class: "form-control", placeholder: "Duracion total en Horas" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :category, "Categoria" %>
+    <%= f.select :category, Training.categories, {}, class: "form-control"%>
+  </div>
+
+</div>
+<div style="width: 48%; float: right">
+  <div class="form-group">
+    <%= f.label :institution_id, "Institucion a Cargo" %>
+    <%= f.select(:institution_id, options_for_select(Institution.all.pluck(:name, :id)))%>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :duration, "Duracion" %>
+    <%= f.number_field :duration, class: "form-control", placeholder: "Duracion total en Horas" %>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Capacitacion planeada?</label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <div id="planned" class="btn-group" data-toggle="buttons">
+        <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+            <%= f.radio_button :planned, true %> &nbsp; Si &nbsp;
+        </label>
+        <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+          <%= f.radio_button :planned, false %> No
+        </label>
+      </div>
+    </div>
+  </div>
+
+</div>
+<br>
+</div>

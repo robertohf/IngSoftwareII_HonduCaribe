@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  profession: MyText
+  birth_at: 2017-02-05
+  birth_place: MyText
+  date_admission: 2017-02-05
+  position: MyString
+  salary: 9.99
+  number_id: 1
+  base_b^Cong: MyString
+  civil_status: MyString
+  address: MyText
+  blood_type: MyString
+  emergency_contact_name: MyString
+  emergency_contact_number: 1
+
+two:
+  name: MyString
+  profession: MyText
+  birth_at: 2017-02-05
+  birth_place: MyText
+  date_admission: 2017-02-05
+  position: MyString
+  salary: 9.99
+  number_id: 1
+  base_b^Cong: MyString
+  civil_status: MyString
+  address: MyText
+  blood_type: MyString
+  emergency_contact_name: MyString
+  emergency_contact_number: 1

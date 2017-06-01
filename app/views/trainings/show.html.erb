@@ -1,0 +1,186 @@
+<div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>User Profile</h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                      <h3><%=@training.training_name%></h3>
+
+                      <ul class="list-unstyled user_data">
+                        <li>
+                           <%= @training.duration%> horas
+                        </li>
+                        <li>
+                           <%= nice_date(@training.start_date) %>
+                        </li>
+                        <% if(Institution.find_by_id(@training.institution_id)) %>
+                        <li>
+                           <%= Institution.find_by_id(@training.institution_id).name%>
+                        </li>
+                        <%end%>
+                        <% if(Instructor.find_by_id(@training.instructor_id)) %>
+                        <li>
+                           <%= Instructor.find_by_id(@training.instructor_id).name %>, <%= Instructor.find_by_id(@training.instructor_id).phone %>, <%= Instructor.find_by_id(@training.instructor_id).email %>
+                        </li>
+                        <%end%>
+                      </ul>
+                        <% if(!Instructor.find_by_id(@training.instructor_id)) %>
+                      <%= link_to edit_training_path(@training), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addInstructor', class: "btn btn-success"} do %>
+                        <i class="fa fa-edit m-right-xs"></i> Anadir Instructor
+                      <% end %>
+                      <%end%>
+
+
+                      <br />
+
+
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                          <li role="presentation"><a href="#tab_content2" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Empleados</a>
+                          </li>
+                        </ul>
+
+                        <div id="myTabContent" class="tab-content">
+                          <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="home-tab" style="text-align: center">
+
+                            <% if @training.employees.any? %>
+                              <table class="data table table-striped no-margin" style="text-align: center; width: 100%">
+                                <thead>
+                                  <tr>
+                                    <th style= "text-align: center">Codigo Empleado</th>
+                                    <th style= "text-align: center">Nombre</th>
+                                    <th style= "text-align: center">Asistencia</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <%- @training.employees.each do |f| %>
+                                      <tr>
+                                        <td><%= f.work_id %></td>
+                                        <td><%= link_to f.name, employee_path(f) %></td>
+                                        <%if TrainingEmployee.where("training_id = ? AND employee_id = ?", @training.id, f.id).first.asistencia  %>
+                                          <td>Asistio</td>
+                                        <%else%>
+                                          <td>No Asistio</td>
+                                        <%end%>
+
+                                        <th>
+                                          <%= form_for TrainingEmployee.where("training_id = ? AND employee_id = ?", @training.id, f.id).first, url: training_training_employee_path(@training, TrainingEmployee.where("training_id = ? AND employee_id = ?", @training.id, f.id).first.id) do |f| %>
+                                            <%= f.hidden_field :asistencia, value: true %>
+                                            <%= f.submit "Confirmar Asistencia", class:"btn btn-success"%>
+                                          <% end %>
+                                          <%= form_for TrainingEmployee.where("training_id = ? AND employee_id = ?", @training.id, f.id).first, url: training_training_employee_path(@training, TrainingEmployee.where("training_id = ? AND employee_id = ?", @training.id, f.id).first.id) do |f| %>
+                                            <%= f.hidden_field :asistencia, value: false %>
+                                            <%= f.submit "Confirmar Inasistencia", class:"btn btn-danger"%>
+                                          <% end %>
+                                        </td>
+                                      </trh
+                                    <%- end %>
+                                </tbody>
+                              </table>
+                              <% else %>
+                                <p><em>No hay Informacion.</em></p>
+                              <% end %>
+                              <%= link_to new_training_training_employee_path(@training), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addEmployee', class: "btn btn-success"} do %>
+                                <i class="fa fa-edit m-right-xs"></i> Invitar Empleado
+                              <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+<div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="myModalLabel">Invitar Empleado</h4>
+      </div>
+      <%= form_for [@training, @training_employee] do |f| %>
+      <div class="modal-body">
+        <div class="form-group">
+          <%= f.label :employee_id, "Empleado" %>
+          <%= f.select(:employee_id) do %>
+            <% Employee.where("employee_status = true").each do |a| -%>
+              <%= content_tag(:option, a.work_id.to_s + " - " + a.name, value: a.id) %>
+            <% end %>
+          <%end%>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <%= f.submit "Crear" , class: "btn btn-primary"%>
+      </div>
+      <%- end %>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addInstructor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="myModalLabel">Anadir Instructor</h4>
+      </div>
+      <%= form_for @training do |f| %>
+      <div class="modal-body">
+        <div class="form-group">
+          <%= f.label :instructor_id, "Instructor" %>
+          <%= f.select(:instructor_id, options_for_select(Institution.find_by_id(@training.institution_id).instructors.pluck(:name, :id)))%>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <%= f.submit "Crear" , class: "btn btn-primary"%>
+      </div>
+      <%- end %>
+    </div>
+  </div>
+</div>

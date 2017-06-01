@@ -1,0 +1,102 @@
+<div class="right_col" role="main">
+  <div class="">
+    <div class="page-title">
+      <div class="title_left">
+        <h3>HonduCaribe</h3>
+      </div>
+
+      <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Buscar...">
+                    <span class="input-group-btn">
+                              <button class="btn btn-default" type="button">Ir!</button>
+                          </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="row">
+
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel" style="height:600px; ">
+          <div class="x_title">
+            <h2>Puesto</h2>
+            <div class="clearfix"></div>
+          </div>
+          <div style="float: center; border-left: 500px">
+            <h3>Empleados</h3>
+              <% if @work_structure.employees.any? %>
+                <table class="data table table-striped no-margin" style="text-align: center; width: 100%">
+                  <thead>
+                    <tr>
+                      <th style= "text-align: center">Codigo Empleado</th>
+                      <th style= "text-align: center">Nombre</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <%- @work_structure.employees.each do |f| %>
+                        <tr>
+                          <td><%= f.work_id %></td>
+                          <td><%= link_to f.name, employee_path(f) %></td>
+                        </tr>
+                      <%- end %>
+                  </tbody>
+                </table>
+                <% else %>
+                  <p><em>No hay Informacion.</em></p>
+                <% end %>
+
+                <h3>Habilidades</h3>
+                  <% if @work_structure.abilities.any? %>
+                    <table class="data table table-striped no-margin" style="text-align: center; width: 100%">
+                      <thead>
+                        <tr>
+                          <th style= "text-align: center">Habilidad</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <%- @work_structure.abilities.each do |f| %>
+                            <tr>
+                              <td><%= f.ability %></td>
+                            </tr>
+                          <%- end %>
+                      </tbody>
+                    </table>
+                    <% else %>
+                      <p><em>No hay Informacion.</em></p>
+                    <% end %>
+                    <%= link_to new_work_structure_ability_path(@work_structure), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addAbility', class: "btn btn-success"} do %>
+                      <i class="fa fa-edit m-right-xs"></i> Anadir Habilidad
+                    <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addAbility" tabindex="-1" role="dialog" ar ia-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Habilidad</h4>
+      </div>
+      <%= form_for [@work_structure, @work_structure_ability] do |f| %>
+      <div class="modal-body">
+        <div class="form-group">
+          <%= f.label :ability_id, "Puesto" %>
+          <%= f.select(:ability_id, options_for_select(Ability.all.pluck(:ability, :id)))%>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <%= f.submit "Crear" , class: "btn btn-primary"%>
+      </div>
+      <%- end %>
+    </div>
+  </div>
+</div>

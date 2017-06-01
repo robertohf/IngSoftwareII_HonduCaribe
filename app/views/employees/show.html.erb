@@ -1,0 +1,572 @@
+<div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>User Profile</h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Perfil de Empleado #<%=@employee.work_id%></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                      <div class="profile_img">
+                        <div id="crop-avatar">
+                          <!-- Current avatar -->
+                          <%= image_tag @employee.image.url, class: "img-responsive avatar-view" %>
+                        </div>
+                      </div>
+                      <h3><%=@employee.name%></h3>
+
+                      <ul class="list-unstyled user_data">
+                        <%if(WorkStructure.find(@employee.work_structure_id)) %>
+                        <li>
+                          <i class="fa fa-user user-profile-icon"></i> <%= WorkStructure.find(@employee.work_structure_id).department %> - <%= WorkStructure.find(@employee.work_structure_id).area %>
+                        </li>
+                        <%end%>
+                        <li>
+                          <i class="fa fa-user user-profile-icon"></i>
+                          <% if(@employee.gender.to_s == "Hombre") %>
+                            Masculino
+                          <% else %>
+                            Femenino
+                          <%end%>
+                        </li>
+
+                        <li><i class="fa fa-map-marker user-profile-icon"></i> <%= @employee.birth_place %>, <%= nice_date(@employee.birth_at) %>
+                        </li>
+
+                        <li>
+                          <i class="fa fa-briefcase user-profile-icon"></i> <%= @employee.profession %>
+                        </li>
+
+                        <li class="m-top-xs">
+                          <i class="fa fa-envelope user-profile-icon"></i> <%= @employee.email %>
+                        </li>
+                      </ul>
+
+                      <%= link_to edit_employee_path(@employee), class: "btn btn-success" do %>
+                        <i class="fa fa-edit m-right-xs"></i> Editar Empleado
+                      <% end %>
+                      <% if @employee.employee_status %>
+                        <%= link_to suprimir_path(:id => @employee.id), class: "btn btn-danger" do %>
+                          <i class="fa fa-times m-right-xs"></i> Suprimir Empleado
+                        <% end %>
+                      <% else %>
+                        <%= link_to reactivar_path(:id => @employee.id), class: "btn btn-danger" do %>
+                          <i class="fa fa-times m-right-xs"></i> Reactivar Empleado
+                        <% end %>
+                      <% end %>
+
+
+                      <br />
+
+                      <!-- start skills -->
+                      <!-- end of skills -->
+
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                          <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Informacion General</a>
+                          </li>
+                          <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Informacion Estudio</a>
+                          </li>
+                          <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Lugares de Trabajo Anteriores</a>
+                          </li>
+                          <li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Dependientes</a>
+                          </li>
+                          <li role="presentation" class=""><a href="#tab_content5" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Capacitaciones</a>
+                          </li>
+                          <li role="presentation" class=""><a href="#tab_content6" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Horas</a>
+                          </li>
+                          <li role="presentation" class=""><a href="#tab_content7" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Perfil Comparativo</a>
+                          </li>
+                          <li role="presentation" class=""><a href="#tab_content8" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Permisos</a>
+                          </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                          <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                            <div style="float: left; width: 500px; font-size: 20px;">
+                              <p>
+                                Nacimiento: <%= @employee.birth_at %>, <%= @employee.birth_place %>
+                              </p>
+                              <p>
+                                Numero de Identidad: <%= @employee.identity_number %>
+                              </p>
+                              <p>
+                                Fecha de Contratacion: <%= @employee.date_admission %>
+                              </p>
+                              <p>
+                                Salario: Lps.<%= @employee.salary %>
+                              </p>
+                            </div>
+                            <div style="float: right; width: 500px; font-size: 20px">
+                              <p>
+                                Direccion: <%= @employee.address %>
+                              </p>
+                              <p>
+                                Tipo de sangre: <%= @employee.blood_type %>
+                              </p>
+                              <p>
+                                Contacto de emergencia: <%= @employee.emergency_contact_name %>, Tel. <%= @employee.emergency_contact_number %>
+                              </p>
+                            </div>
+                          </div>
+                          <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab" style="text-align: center">
+
+                            <% if @employee.educations.any? %>
+                              <table class="data table table-striped no-margin" style="text-align: center; width: 100%">
+                              	<thead>
+                              		<tr>
+                              			<th style= "text-align: center">Institucion</th>
+                                    <th style= "text-align: center">Titulo</th>
+                              			<th style= "text-align: center">Fecha Inicio</th>
+                              			<th style= "text-align: center">Fecha Culminacion</th>
+                                    <th style= "text-align: center">Completo</th>
+                                    <th style= "text-align: center">Constancia</th>
+                              		</tr>
+                              	</thead>
+                              	<tbody>
+                              			<%- @employee.educations.each do |f| %>
+                              				<tr>
+                              					<td><%= f.school_name %></td>
+                              					<td><%= f.title_description %></td>
+                              					<td><%= nice_date(f.year_start)  %></td>
+                                        <td><%= nice_date(f.year_end)  %></td>
+                                        <% if f.completed %>
+                              					  <td>Si</td>
+                                        <% else %>
+                                          <td>No</td>
+                                        <% end %>
+                                        <td><%= link_to "Descargar",  f.document.url %></td>
+                              				</tr>
+                              			<%- end %>
+                              	</tbody>
+                              </table>
+                              <% else %>
+                                <p><em>No hay Informacion.</em></p>
+                              <% end %>
+                              <%= link_to new_employee_education_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addEducation', class: "btn btn-success"} do %>
+                                <i class="fa fa-edit m-right-xs"></i> Anadir Estudio
+                              <% end %>
+
+                          </div>
+                          <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab" style="text-align: center">
+                            <% if @employee.work_exps.any? %>
+                              <table class="data table table-striped no-margin" style="text-align: center; width: 100%">
+                              	<thead>
+                              		<tr>
+                              			<th style= "text-align: center">Compania</th>
+                                    <th style= "text-align: center">Puesto</th>
+                              			<th style= "text-align: center">Fecha Inicio</th>
+                              			<th style= "text-align: center">Fecha Culminacion</th>
+                                    <th style= "text-align: center">Constancia</th>
+                              		</tr>
+                              	</thead>
+                              	<tbody>
+                              			<%- @employee.work_exps.each do |f| %>
+                              				<tr>
+                              					<td><%= f.company_name %></td>
+                              					<td><%= f.position %></td>
+                              					<td><%= nice_date(f.year_start)  %></td>
+                                        <td><%= nice_date(f.year_end)  %></td>
+                                        <td><%= link_to "Descargar", f.document.url %></td>
+                              				</tr>
+                              			<%- end %>
+                              	</tbody>
+                              </table>
+                              <% else %>
+                                <p><em>No hay Informacion.</em></p>
+                              <% end %>
+                              <%= link_to new_employee_work_exp_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addWorkExp', class: "btn btn-success"} do %>
+                                <i class="fa fa-edit m-right-xs"></i> Anadir Experiencia Laboral
+                              <% end %>
+                          </div>
+                          <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab" style="text-align: center">
+                            <% if @employee.dependants.any? %>
+                              <table class="data table table-striped no-margin" style="text-align: center; width: 100%">
+                              	<thead>
+                              		<tr>
+                              			<th style= "text-align: center">Nombre</th>
+                                    <th style= "text-align: center">Parentesco</th>
+                                    <th style= "text-align: center">Correo</th>
+                                    <th style= "text-align: center">Telefono</th>
+                                    <th style= "text-align: center">Fecha de Nacimiento</th>
+                              		</tr>
+                              	</thead>
+                              	<tbody>
+                              			<%- @employee.dependants.each do |f| %>
+                              				<tr>
+                              					<td><%= f.name %></td>
+                              					<td><%= f.relation %></td>
+                                        <td><%= f.email %></td>
+                                        <td><%= f.phone %></td>
+                                        <td><%= nice_date(f.birth_at) %></td>
+                              				</tr>
+                              			<%- end %>
+                              	</tbody>
+                              </table>
+                              <% else %>
+                                <p><em>No hay Informacion.</em></p>
+                              <% end %>
+                              <%= link_to new_employee_dependant_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addDependant', class: "btn btn-success"} do %>
+                                <i class="fa fa-edit m-right-xs"></i> Anadir Dependiente
+                              <% end %>
+                          </div>
+                          <div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
+                            <% if @employee.trainings.any? %>
+                              <table class="data table table-striped no-margin" style="text-align: center; width: 100%">
+                                <thead>
+                                  <tr>
+                                    <th style= "text-align: center">Capacitacion</th>
+                                    <th style= "text-align: center">Fecha</th>
+                                    <th style= "text-align: center">Asistencia</th>
+                                    <th>
+
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <%- @employee.trainings.each do |f| %>
+                                    <tr>
+                                      <td><%= link_to f.training_name, training_path(f) %></td>
+                                      <td><%= f.start_date %></td>
+                                      <%if TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first.asistencia  %>
+                                        <td>Asistio</td>
+                                      <%else%>
+                                        <td>No Asistio</td>
+                                      <%end%>
+
+                                      <td>
+                                        <%= form_for TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first, url: training_training_employee_path(f.id, TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first.id) do |f| %>
+                                          <%= f.hidden_field :asistencia, value: true %>
+                                          <%= f.submit "Confirmar Asistencia", class:"btn btn-success"%>
+                                        <% end %>
+                                        <%= form_for TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first, url: training_training_employee_path(f.id, TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first.id) do |f| %>
+                                          <%= f.hidden_field :asistencia, value: false %>
+                                          <%= f.submit "Confirmar Inasistencia", class:"btn btn-danger"%>
+                                        <% end %>
+                                        <%end%>
+                                </tbody>
+                              </table>
+
+                              <% else %>
+                                <p><em>No hay Informacion.</em></p>
+                              <% end %>
+
+                          </div>
+                          <div role="tabpanel" class="tab-pane fade" id="tab_content6" aria-labelledby="profile-tab" style="text-align: center">
+                            <%= form_for(:report, remote: true, html: {id:"date_form", class:"row"}) do |f| %>
+                              <div class="col-xs-6">
+                                <%= f.label :from, "Desde: ", class:"col-xs-2" %>
+                                <%= f.date_field :from, class: "form-control col-xs-10", value: Date.today, onchange: "$('#date_form').submit();" %>
+                              </div>
+                              <div class="col-xs-6">
+                                <%= f.label :to, "Hasta: ", class:"col-xs-2"%>
+                                <%= f.date_field :to, class: "form-control col-xs-10", value: Date.today, onchange: "$('#date_form').submit();" %>
+                              </div>
+                            <% end %>
+                            <div id="hours_show">
+                              <%= render partial: "hours_show", locals: {employee: @employee, from: Date.today, to: Date.today} %>
+                            </div>
+                          </div>
+
+                          <div role="tabpanel" class="tab-pane fade" id="tab_content7" aria-labelledby="profile-tab" style="text-align: center">
+
+                            <div class="" border="1" style="float: left">
+
+                            <% if @employee.educations.any? %>
+                              <table class="data table table-striped no-margin" style="text-align: center; ">
+                                <thead>
+                                  <tr>
+                                    <th style= "text-align: center">Institucion</th>
+                                    <th style= "text-align: center">Titulo</th>
+                                    <th style= "text-align: center">Fecha Inicio</th>
+                                    <th style= "text-align: center">Fecha Culminacion</th>
+                                    <th style= "text-align: center">Completo</th>
+                                    <th style= "text-align: center">Constancia</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <%- @employee.educations.each do |f| %>
+                                      <tr>
+                                        <td><%= f.school_name %></td>
+                                        <td><%= f.title_description %></td>
+                                        <td><%= nice_date(f.year_start)  %></td>
+                                        <td><%= nice_date(f.year_end)  %></td>
+                                        <% if f.completed %>
+                                          <td>Si</td>
+                                        <% else %>
+                                          <td>No</td>
+                                        <% end %>
+                                        <td><%= link_to "Descargar", f.document.url %></td>
+                                      </tr>
+                                    <%- end %>
+                                </tbody>
+                              </table>
+                              <% else %>
+                                <p><em>No hay Informacion.</em></p>
+                              <% end %>
+                              <%= link_to new_employee_education_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addEducation', class: "btn btn-success"} do %>
+                                <i class="fa fa-edit m-right-xs"></i> Anadir Estudio
+                              <% end %>
+                            </div>
+
+                            <div border="1" class="" style="float: left; widht: 70%; margin-left: 40px">
+
+                              <table class="data table table-striped no-margin" style="text-align: center; width: 100%">
+                                <thead>
+                                  <tr>
+                                    <th style= "text-align: center">Habilidades De Puesto</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                <%-if @work_structure_of_employee.abilities.any? %>
+                                    <%- @work_structure_of_employee.abilities.each do |f| %>
+                                      <tr>
+                                        <td><%= f.ability %></td>
+                                      </tr>
+                                    <%- end %>
+                                <% else %>
+                                <p><em>No hay habilidades</em></p>
+                                <% end %>
+                                </tbody>
+                            </table>
+                            </div>
+
+                          </div>
+                          <div role="tabpanel" class="tab-pane fade" id="tab_content8" aria-labelledby="profile-tab" style="text-align: center">
+                            <% if @employee.permissions.any? %>
+                              <table class="data table table-striped no-margin" style="text-align: center; width: 100%">
+                              	<thead>
+                              		<tr>
+                              			<th style= "text-align: center">Fecha Inicio</th>
+                                    <th style= "text-align: center">Fecha Final</th>
+                                    <th style= "text-align: center">Tipo</th>
+                              		</tr>
+                              	</thead>
+                              	<tbody>
+                              			<%- @employee.permissions.each do |f| %>
+                              				<tr>
+                              					<td><%= f.time_in %></td>
+                              					<td><%= f.time_out %></td>
+                                        <td><%= f.permission_type %></td>
+                              				</tr>
+                              			<%- end %>
+                              	</tbody>
+                              </table>
+                              <% else %>
+                                <p><em>No hay Informacion.</em></p>
+                              <% end %>
+                              <%= link_to new_employee_permission_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addPermission', class: "btn btn-success"} do %>
+                                <i class="fa fa-edit m-right-xs"></i> Anadir Permiso
+                              <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal 1 -->
+        <div class="modal fade" id="addEducation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Agregar Estudio</h4>
+              </div>
+              <%= form_for [@employee, @education] do |f| %>
+              <div class="modal-body">
+                <div class="form-group">
+                  <%= f.label :school_name, "Institucion" %>
+                  <%= f.text_field :school_name, class: "form-control", placeholder: "Institucion" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :title_description, "Titulo" %>
+                  <%= f.text_field :title_description, class: "form-control", placeholder: "Titulo" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :year_start, "Fecha de Inicio" %>
+                  <%= f.date_field :year_start, class: "form-control" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :year_end, "Fecha de Culminacion" %>
+                  <%= f.date_field :year_end, class: "form-control" %>
+                </div>
+                <div class="field">
+                  <%= f.label :completed, "Completado" %> <br />
+                  <%= f.check_box :completed %> <br />
+                </div>
+                <div class="form-group">
+                  <%= f.label :document, "Constancia" %>
+                  <%= f.file_field :document %>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <%= f.submit "Crear" , class: "btn btn-primary"%>
+              </div>
+              <%- end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="addWorkExp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Agregar Experiencia Laboral</h4>
+              </div>
+              <%= form_for [@employee, @work_exp] do |f| %>
+              <div class="modal-body">
+                <div class="form-group">
+                  <%= f.label :company_name, "Institucion" %>
+                  <%= f.text_field :company_name, class: "form-control", placeholder: "Lugar" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :position, "Titulo" %>
+                  <%= f.text_field :position, class: "form-control", placeholder: "Posicion" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :year_start, "Fecha de Inicio" %>
+                  <%= f.date_field :year_start, class: "form-control" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :year_end, "Fecha de Culminacion" %>
+                  <%= f.date_field :year_end, class: "form-control" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :document, "Constancia" %>
+                  <%= f.file_field :document %>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <%= f.submit "Crear" , class: "btn btn-primary"%>
+              </div>
+              <%- end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="addAbility" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Agregar Habilidad</h4>
+              </div>
+              <%= form_for [@employee, @employee_ability] do |f| %>
+              <div class="modal-body">
+                <%= f.hidden_field :employee_id, value: @employee.id %>
+                <div class="form-group">
+                  <%= f.label :ability_id, "Puesto" %>
+                  <%= f.select(:ability_id, options_for_select(WorkStructure.find_by_id(@employee.work_structure_id).abilities.pluck(:ability, :id)))%>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <%= f.submit "Crear" , class: "btn btn-primary"%>
+              </div>
+              <%- end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="addHours" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <h4 class="modal-title" id="myModalLabel">Agregar Hora</h4>
+            </div>
+            <%= form_for [@employee, @hour] do |f| %>
+            <div class="modal-body">
+              <div class="form-group">
+              <%= label :start_date, "Fecha y Hora de Entrada" %>
+              <%= datetime_local_field(:hour, :time_in) %>
+            </div>
+            <div class="form-group">
+            <%= label :start_date, "Fecha y Hora de Salida" %>
+            <%= datetime_local_field(:hour, :time_out) %>
+            </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <%= f.submit "Crear" , class: "btn btn-primary"%>
+            </div>
+            <%- end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="addPermission" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <h4 class="modal-title" id="myModalLabel">Agregar Permiso</h4>
+            </div>
+            <%= form_for [@employee, @permission] do |f| %>
+            <div class="modal-body">
+              <div class="form-group">
+                <%= label :time_in, "Fecha y Hora de Entrada" %>
+                <%= datetime_local_field(:permission, :time_in) %>
+              </div>
+              <div class="form-group">
+                <%= label :time_in, "Fecha y Hora de Salida" %>
+                <%= datetime_local_field(:permission, :time_out) %>
+              </div>
+              <div class="form-group">
+                  <%= f.label :permission_type, "Tipo de  Jornada: " %>
+                  <%= f.select :permission_type, Permission.tipos, {}, class: "form-control"%>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <%= f.submit "Crear" , class: "btn btn-primary"%>
+            </div>
+            <%- end %>
+          </div>
+        </div>
+      </div>

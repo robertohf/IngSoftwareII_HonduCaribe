@@ -1,0 +1,94 @@
+<div class="right_col" role="main">
+  <div class="">
+    <div class="page-title">
+      <div class="title_left">
+        <h3><%= @institution.name %> </h3>
+        <h5></h5>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel" style="height:600px; ">
+          <div class="x_title">
+            <h2>Institucion</h2>
+            <div class="clearfix"></div>
+          </div>
+          <div style="float: center; border-left: 500px">
+            <h3>Instructores</h3>
+            <% if @institution.instructors.any? %>
+              <table class="data table table-striped no-margin" style="text-align: center; width: 100%">
+                <thead>
+                  <tr>
+                    <th style= "text-align: center">Nombre</th>
+                    <th style= "text-align: center">Correo</th>
+                    <th style= "text-align: center">Numero</th>
+                    <th style= "text-align: center">Descripcion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%- @institution.instructors.each do |f| %>
+                    <% if(f) %>
+                      <tr>
+                        <td><%= f.name %></td>
+                        <td><%= f.email %></td>
+                        <td><%= f.phone %></td>
+                        <td><%= f.description %></td>
+                      </tr>
+                    <%end%>
+                  <%- end %>
+                </tbody>
+              </table>
+              <% else %>
+                <p><em>No hay Informacion.</em></p>
+              <% end %>
+                <%= link_to new_institution_instructor_path(@institution), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addInstructor', class: "btn btn-success"} do %>
+                  <i class="fa fa-edit m-right-xs"></i> Anadir Instructor
+                <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addInstructor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="myModalLabel">Anadir Instructor</h4>
+      </div>
+      <%= form_for [@institution, @instructor] do |f| %>
+      <div class="modal-body">
+        <div class="form-group">
+          <%= f.label :name, "Nombre" %>
+          <%= f.text_field :name, class: "form-control", placeholder: "Nombre de la Institucion" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :email, "Correo" %>
+          <%= f.email_field :email, class: "form-control", placeholder: "Correo" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :description, "Descripcion" %>
+          <%= f.text_field :description, class: "form-control", placeholder: "Descripcion" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :phone, "Telefono" %>
+          <%= f.text_field :phone, class: "form-control", placeholder: "Telefono" %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <%= f.submit "Crear" , class: "btn btn-primary"%>
+      </div>
+      <%- end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<table class="table table-hover">
+  <thead style="font-size: 18px; font-family: Fjalla One, sans-serif; color: #00263D">
+    <tr>
+      <th>Codigo de Empleado</th>
+      <th>Nombre</th>
+      <th>Normal</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>100%</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%- employees.each do |f| %>
+      <%- hours = f.get_hours(time_in, time_out) %>
+      <tr>
+        <td><%= f.work_id%></td>
+        <td><%= link_to f.name, employee_path(f) %></td>
+        <td><%= hours["normal"] %></td>
+        <td><%= hours["25"] %></td>
+        <td><%= hours["50"] %></td>
+        <td><%= hours["75"] %></td>
+        <td><%= hours["100"] %></td>
+      </tr>
+    <%- end %>
+  </tbody>
+</table>

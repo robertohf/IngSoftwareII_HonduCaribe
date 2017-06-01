@@ -1,0 +1,23 @@
+<div>
+  <h1 class="page-header">
+  	Perfil de Usuario
+  </h1>
+
+ <table border="2" class="table table-hover table-bordered">
+	<thead>
+		<tr>
+			<th> Nombre </th>
+			<th> Email </th>
+		</tr>
+	</thead>
+	<tbody>
+		<td> <%= current_user.name %> </td>
+		<td> <%= current_user.email %> </td>
+	</tbody>
+</table>
+
+<div class="btn-group" role="group" aria-label="Acciones">
+<%= link_to "Editar Informacion", edit_profile_path, class: "btn btn-default"  %>
+</div>
+
+ </div>

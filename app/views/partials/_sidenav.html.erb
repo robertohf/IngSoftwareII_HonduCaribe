@@ -1,0 +1,97 @@
+<div class="main_container">
+
+  <div class="col-md-3 left_col">
+    <div class="left_col scroll-view">
+
+      <div class="navbar nav_title" style="border: 0;">
+        <a class="site_title"><%= image_tag "gota.png", style: "width: 48px"%> HonduCaribe </a>
+      </div>
+      <div class="clearfix"></div>
+
+      <% if current_user %>
+      <!-- menu profile quick info -->
+      <div class="profile">
+        <div class="profile_pic">
+          <%= image_tag "img.jpg", :class => "img-circle profile_img"  %>
+        </div>
+        <div class="profile_info">
+          <span>Bienvenido,</span>
+          <h2>Mr. Jose</h2>
+        </div>
+      </div>
+
+      <!-- /menu profile quick info -->
+
+      <br />
+      <% end %>
+      <!-- sidebar menu -->
+      <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+        <div class="menu_section">
+          <% if current_user %>
+            <h3>General Jose's Managers</h3>
+          <% end %>
+
+          <ul class="nav side-menu">
+            <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu" style="display: none">
+                <li><%= link_to "HonduCaribe", root_path%>
+                <% unless current_user %>
+                </li>
+                <li><%= link_to "Login", login_path %><li>
+                  <%= link_to new_user_path do %>
+                    <span class="fa fa-address-card-o"></span>
+                    Crear Usuario
+                  <% end %>
+                </li>
+                <%  end %>
+              </ul>
+            </li>
+
+            <% if current_user %>
+            <li><a><i class="fa fa-users"></i> Empleados <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu" style="display: none">
+                <li><%= link_to "Creacion de nuevo Empleado", new_employee_path%>
+                </li>
+                <li><%= link_to "Listado de Empleados", employees_path%>
+                </li>
+              </ul>
+            </li>
+            <li><a><i class="fa fa-graduation-cap"></i> Capacitaciones <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu" style="display: none">
+                <li><%= link_to "Listado de Capacitaciones", trainings_path%>
+                </li>
+                <li><%= link_to "Creacion de nueva Capacitaciones", new_training_path%>
+                </li>
+                <li><%= link_to "Instituciones", institutions_path%>
+                </li>
+              </ul>
+            </li>
+            <li><a><i class="fa fa-sitemap"></i> Estructura Laboral <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu" style="display: none">
+                <li><%= link_to "Estructura Laboral", work_structures_path%>
+                </li>
+                <li><%= link_to "Crear Habilidad", new_ability_path%>
+                </li>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="menu_section">
+          <h3>Reportes</h3>
+          <ul class="nav side-menu">
+            <li><a><i class="fa fa-users"></i> Reporte de Empleados <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu" style="display: none">
+                  <li><%= link_to "Bono Educativo", bonoEducativo_path %> </li>
+                <li><%= link_to "Reporte de Horas", hours_path%>
+                </li>
+              </ul>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+
+      </div>
+      <!-- /sidebar menu -->
+    </div>
+  </div>
