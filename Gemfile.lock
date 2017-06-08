@@ -73,6 +73,8 @@ GEM
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
+    chartjs-ror (3.3.1)
+      rails (>= 3.1)
     chronic (0.10.2)
     climate_control (0.2.0)
     cocaine (0.5.8)
@@ -360,6 +362,7 @@ DEPENDENCIES
   bootstrap-sass
   byebug
   carrierwave (~> 1.0)
+  chartjs-ror
   coffee-rails (~> 4.1.0)
   fog
   font-awesome-rails
