@@ -36,6 +36,8 @@ gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip.git', branch: 'ma
 
 gem 'rails_12factor', '~> 0.0.3'
 
+gem 'whenever', :require => false
+
 gem 'rubocop', require: false
 # Use Unicorn as the app server
 # gem 'unicorn'

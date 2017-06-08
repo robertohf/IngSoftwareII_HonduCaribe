@@ -23,6 +23,8 @@ class TrainingsController < ApplicationController
   def show
     @training = Training.find(params[:id])
     @training_employee = @training.training_employees.build
+    @training_ability = @training.training_abilities.build
+
     end
 
   def edit
@@ -38,6 +40,20 @@ class TrainingsController < ApplicationController
       render :edit
     end
   end
+
+
+  def confirmarAsistencia
+    @training = Training.find(params[:id])
+    Training.AddAbility(@training)
+    @training.asistenciaConfirmada = true
+    @training.save
+
+    redirect_to @training
+    return
+
+
+  end
+
 
   def destroy
     @training = Training.find(params[:id])

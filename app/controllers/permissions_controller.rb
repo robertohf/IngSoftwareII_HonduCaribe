@@ -7,7 +7,8 @@ class PermissionsController < ApplicationController
   def create
     @employee = Employee.find(params[:employee_id])
     @permission = @employee.permissions.build(permissions_params)
-
+    @employee.increment!(:monthly_permissions)
+    @employee.increment!(:annual_permissions)
     if @permission.save
       redirect_to @employee, notice: 'Se agrego con exito'
     else

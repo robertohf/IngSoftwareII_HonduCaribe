@@ -1,0 +1,2 @@
+module TrainingAbilitiesHelper
+end

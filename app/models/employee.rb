@@ -8,7 +8,7 @@ class Employee < ActiveRecord::Base
                     url: 's3-us-west-2.amazonaws.com/honducariberrhh',
                     path: '/assets/photos/:id/:style/:basename.:extension',
                     s3_host_name: 's3-us-west-2.amazonaws.com'
-                    
+
   validates_attachment_content_type :image, content_type: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
 
   has_many :educations
@@ -42,10 +42,6 @@ class Employee < ActiveRecord::Base
     %w[Ejemplo1 Ejemplo2 Ejemplo3]
   end
 
-  def self.tiposhorarios
-    %w[Diurno Mixto Nocturno]
-  end
-
   def self.age(dob)
     now = Time.now.utc.to_date
     now.year - dob.year - (now.month > dob.month || (now.month == dob.month && now.day >= dob.day) ? 0 : 1)
@@ -74,6 +70,10 @@ class Employee < ActiveRecord::Base
     hours['50'] = 0
     hours['75'] = 0
     hours['100'] = 0
+    hours['Extra'] = 0
+    hours['VAC'] = 0
+    hours['ASP'] = 0
+    hours['ACP'] = 0
     self.hours.where(time_in: time_in.in_time_zone('UTC').beginning_of_day..time_out.in_time_zone('UTC').end_of_day).each do |h|
       (h.time_in.to_i..h.time_out.to_i).step(1.hour) do |x|
         hours['normal'] += ((h.time_in.change(hour: 8)..h.time_out.change(hour: 17)).cover?(Time.at(x)) ? 1 : 0)
@@ -83,6 +83,45 @@ class Employee < ActiveRecord::Base
         hours['100'] += ((h.time_in.change(hour: 0)..h.time_out.change(hour: 4)).cover?(Time.at(x)) ? 1 : 0)
       end
     end
+    hours['Extra'] = hours['25'] + hours['50'] + hours['75'] + hours['100']
+    self.permissions.where(time_in: time_in.in_time_zone('UTC').beginning_of_day..time_out.in_time_zone('UTC').end_of_day).each do |x|
+      if x.time_out.present? and x.time_in.present?
+        if x.time_out.hour - x.time_in.hour > 8 
+          if x.permission_type == "Vacaciones"
+            hours['VAC'] += 8
+          elsif x.permission_type == "Sin Permiso"
+            hours['ASP'] += 8
+          else
+            hours['ACP'] +=8
+          end
+        else
+          if x.permission_type == "Vacaciones"
+            hours['VAC'] += x.time_out.hour - x.time_in.hour
+          elsif x.permission_type == "Sin Permiso"
+            hours['ASP'] += x.time_out.hour - x.time_in.hour
+          else
+            hours['ACP'] +=x.time_out.hour - x.time_in.hour
+          end
+        end
+      end
+    end
     hours
   end
+
+  def self.AddAbility(employeeId, abilityId, training_id)
+
+    @employee = Employee.find(employeeId)
+    @employee_ability = @employee.employee_abilities.build
+
+    @employee_ability.employee_id = employeeId
+    @employee_ability.ability_id = abilityId
+    @employee_ability.training_id = training_id
+
+    @employee_ability.save
+
+  end
+
+
+
+
 end

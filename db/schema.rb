@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170531171623) do
+ActiveRecord::Schema.define(version: 20170608025751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20170531171623) do
   create_table "employee_abilities", force: :cascade do |t|
     t.integer "employee_id"
     t.integer "ability_id"
+    t.integer "training_id"
   end
 
   add_index "employee_abilities", ["ability_id"], name: "index_employee_abilities_on_ability_id", using: :btree
@@ -102,7 +103,8 @@ ActiveRecord::Schema.define(version: 20170531171623) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.string   "scheduletype"
+    t.integer  "monthly_permissions"
+    t.integer  "annual_permissions"
   end
 
   add_index "employees", ["position_id"], name: "index_employees_on_position_id", using: :btree
@@ -112,8 +114,9 @@ ActiveRecord::Schema.define(version: 20170531171623) do
     t.datetime "date"
     t.datetime "time_in"
     t.datetime "time_out"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "scheduletype"
   end
 
   create_table "institutions", force: :cascade do |t|
@@ -142,6 +145,7 @@ ActiveRecord::Schema.define(version: 20170531171623) do
     t.datetime "time_in"
     t.datetime "time_out"
     t.string   "permission_type"
+    t.text     "description"
   end
 
   create_table "position_abilities", force: :cascade do |t|
@@ -169,6 +173,14 @@ ActiveRecord::Schema.define(version: 20170531171623) do
 
   add_index "positions", ["work_structure_id"], name: "index_positions_on_work_structure_id", using: :btree
 
+  create_table "training_abilities", force: :cascade do |t|
+    t.integer "ability_id"
+    t.integer "training_id"
+  end
+
+  add_index "training_abilities", ["ability_id"], name: "index_training_abilities_on_ability_id", using: :btree
+  add_index "training_abilities", ["training_id"], name: "index_training_abilities_on_training_id", using: :btree
+
   create_table "training_employees", force: :cascade do |t|
     t.integer  "employee_id"
     t.integer  "training_id"
@@ -185,12 +197,13 @@ ActiveRecord::Schema.define(version: 20170531171623) do
     t.integer  "duration"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.integer  "instructor_id"
     t.integer  "institution_id"
     t.boolean  "planned"
     t.string   "category"
+    t.boolean  "asistenciaConfirmada"
   end
 
   create_table "users", force: :cascade do |t|
@@ -246,4 +259,6 @@ ActiveRecord::Schema.define(version: 20170531171623) do
   add_foreign_key "position_abilities", "positions"
   add_foreign_key "position_trainings", "positions"
   add_foreign_key "position_trainings", "trainings"
+  add_foreign_key "training_abilities", "abilities"
+  add_foreign_key "training_abilities", "trainings"
 end

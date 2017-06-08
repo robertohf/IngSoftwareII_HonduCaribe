@@ -2,7 +2,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>User Profile</h3>
+                <h3>Empleado</h3>
               </div>
 
               <div class="title_right">
@@ -265,22 +265,29 @@
                                     <tr>
                                       <td><%= link_to f.training_name, training_path(f) %></td>
                                       <td><%= f.start_date %></td>
-                                      <%if TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first.asistencia  %>
+                                      <td>
+                                       <%if TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first.asistencia  %>
                                         <td>Asistio</td>
                                       <%else%>
                                         <td>No Asistio</td>
                                       <%end%>
+                                    </td>
 
                                       <td>
-                                        <%= form_for TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first, url: training_training_employee_path(f.id, TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first.id) do |f| %>
-                                          <%= f.hidden_field :asistencia, value: true %>
-                                          <%= f.submit "Confirmar Asistencia", class:"btn btn-success"%>
-                                        <% end %>
-                                        <%= form_for TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first, url: training_training_employee_path(f.id, TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first.id) do |f| %>
-                                          <%= f.hidden_field :asistencia, value: false %>
-                                          <%= f.submit "Confirmar Inasistencia", class:"btn btn-danger"%>
-                                        <% end %>
+                                        <% if !f.asistenciaConfirmada %>
+                                          <%= form_for TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first, url: training_training_employee_path(f.id, TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first.id) do |f| %>
+                                            <%= f.hidden_field :asistencia, value: true %>
+                                            <%= f.submit "Confirmar Asistencia", class:"btn btn-success"%>
+                                          <% end %>
+                                          <%= form_for TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first, url: training_training_employee_path(f.id, TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first.id) do |f| %>
+                                            <%= f.hidden_field :asistencia, value: false %>
+                                            <%= f.submit "Confirmar Inasistencia", class:"btn btn-danger"%>
+                                          <% end %>
+                                        <% else %>
+                                        <em>Asistencia ya ha sido confirmada</em>
                                         <%end%>
+                                        </td>
+                                      <%end%>
                                 </tbody>
                               </table>
 
@@ -309,31 +316,24 @@
 
                             <div class="" border="1" style="float: left">
 
-                            <% if @employee.educations.any? %>
+                            <% if @abilities_training.any? %>
                               <table class="data table table-striped no-margin" style="text-align: center; ">
                                 <thead>
                                   <tr>
-                                    <th style= "text-align: center">Institucion</th>
-                                    <th style= "text-align: center">Titulo</th>
-                                    <th style= "text-align: center">Fecha Inicio</th>
-                                    <th style= "text-align: center">Fecha Culminacion</th>
-                                    <th style= "text-align: center">Completo</th>
-                                    <th style= "text-align: center">Constancia</th>
+                                    <th style= "text-align: center">Habilidad</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                    <%- @employee.educations.each do |f| %>
+                                    <%- @abilities_training.each do |f| %>
                                       <tr>
-                                        <td><%= f.school_name %></td>
-                                        <td><%= f.title_description %></td>
-                                        <td><%= nice_date(f.year_start)  %></td>
-                                        <td><%= nice_date(f.year_end)  %></td>
-                                        <% if f.completed %>
-                                          <td>Si</td>
-                                        <% else %>
-                                          <td>No</td>
-                                        <% end %>
-                                        <td><%= link_to "Descargar", f.document.url %></td>
+                                        <td><%= Ability.find(f.ability_id).ability %></td>
+                                        <td>
+                                         <% if f.training_id %>
+                                          <%= Training.find(f.training_id).training_name %>
+                                          <% else %>
+                                          <em>Sin Capacitacion</em>
+                                          <% end %>
+                                        </td>
                                       </tr>
                                     <%- end %>
                                 </tbody>
@@ -341,9 +341,7 @@
                               <% else %>
                                 <p><em>No hay Informacion.</em></p>
                               <% end %>
-                              <%= link_to new_employee_education_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addEducation', class: "btn btn-success"} do %>
-                                <i class="fa fa-edit m-right-xs"></i> Anadir Estudio
-                              <% end %>
+
                             </div>
 
                             <div border="1" class="" style="float: left; widht: 70%; margin-left: 40px">
@@ -368,8 +366,20 @@
                             </table>
                             </div>
 
+                            <%= link_to new_employee_ability_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addAbility', class: "btn btn-success"} do %>
+                               <i class="fa fa-edit m-right-xs"></i> Anadir Habilidad
+                             <% end %>
+
                           </div>
                           <div role="tabpanel" class="tab-pane fade" id="tab_content8" aria-labelledby="profile-tab" style="text-align: center">
+                            <div>
+                              <p>
+                                Cantidad de Permisos del presente mes: <%= @employee.monthly_permissions %>
+                              </p>
+                              <p>
+                                Cantidad de Permisos del presente año: <%= @employee.annual_permissions %>
+                              </p>
+                            </div>
                             <% if @employee.permissions.any? %>
                               <table class="data table table-striped no-margin" style="text-align: center; width: 100%">
                               	<thead>
@@ -523,18 +533,22 @@
             <%= form_for [@employee, @hour] do |f| %>
             <div class="modal-body">
               <div class="form-group">
-              <%= label :start_date, "Fecha y Hora de Entrada" %>
-              <%= datetime_local_field(:hour, :time_in) %>
-            </div>
-            <div class="form-group">
-            <%= label :start_date, "Fecha y Hora de Salida" %>
-            <%= datetime_local_field(:hour, :time_out) %>
-            </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <%= f.submit "Crear" , class: "btn btn-primary"%>
-            </div>
+                <%= label :start_date, "Fecha y Hora de Entrada" %>
+                <%= datetime_local_field(:hour, :time_in) %>
+              </div>
+              <div class="form-group">
+                <%= label :start_date, "Fecha y Hora de Salida" %>
+                <%= datetime_local_field(:hour, :time_out) %>
+              </div>
+              <div class="form-group">
+                <%= f.label :scheduletype, "Tipo de  Jornada: " %>
+                <%= f.select :scheduletype, Hour.tiposhorarios, {}, class: "form-control"%>
+              </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <%= f.submit "Crear" , class: "btn btn-primary"%>
+              </div>
             <%- end %>
           </div>
         </div>
@@ -558,9 +572,13 @@
                 <%= datetime_local_field(:permission, :time_out) %>
               </div>
               <div class="form-group">
-                  <%= f.label :permission_type, "Tipo de  Jornada: " %>
+                  <%= f.label :permission_type, "Tipo de  Permiso: " %>
                   <%= f.select :permission_type, Permission.tipos, {}, class: "form-control"%>
-                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :description, "Descripcion" %>
+                <%= f.text_area :description, class: "form-control"%>
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

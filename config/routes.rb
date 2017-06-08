@@ -33,9 +33,14 @@ Rails.application.routes.draw do
   resources :trainings do
     resources :employees
     resources :training_employees
+    resources :training_abilities
+
   end
 
   resources :training_employees
+  resources :training_abilities
+
+
 
   resources :work_structures do
     resources :work_structure_abilities
@@ -48,6 +53,7 @@ Rails.application.routes.draw do
     resources :work_structure_abilities
     resources :work_structures
     resources :employees_abilities
+    resources :training_abilities
     resources :employees
   end
 
@@ -58,6 +64,7 @@ Rails.application.routes.draw do
   get 'comparacion', to: 'employees#comparacion'
 
   get '/bonoEducativo' => 'employees#bonoEducativo'
+  post '/confirmarAsistencia' => 'trainings#confirmarAsistencia'
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'

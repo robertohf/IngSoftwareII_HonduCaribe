@@ -77,10 +77,6 @@
                   <%= f.select :civil_status, Employee.civil_statuses, {}, class: "form-control"%>
                 </div>
                 <div class="form-group">
-                  <%= f.label :scheduletype, "Tipo de  Jornada: " %>
-                  <%= f.select :scheduletype, Employee.tiposhorarios, {}, class: "form-control"%>
-                </div>
-                <div class="form-group">
                   <%= f.label :bank_account, "Cuenta de Banco" %>
                   <%= f.number_field :bank_account, class: "form-control", placeholder: "Cuenta de Banco" %>
                 </div>
