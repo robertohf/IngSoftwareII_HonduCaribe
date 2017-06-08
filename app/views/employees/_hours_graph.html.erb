@@ -1,4 +1,4 @@
-<div id="chart_div">
+<div id="chart_div" style="margin: 0px auto; width:50%">
   <% data_val =  employee.hours.where("time_in >= '#{from}' AND time_out <= '#{to}'").pluck("time_in, time_out").map{|val| ((val[1] - val[0]) / 1.hour).round} %>
   <% puts data_val %>
   <% data = {
@@ -18,6 +18,7 @@
     title: {display: true, text: "Cantidad De Horas"}
   } %>
 
-  <%= line_chart data, options %>
-
+  <div>
+    <%= line_chart data, options %>
+  </div>
 </div>
