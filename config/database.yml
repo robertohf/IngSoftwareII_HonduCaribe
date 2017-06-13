@@ -7,7 +7,7 @@
 development:
   adapter: postgresql
   encoding: latin1
-  database: honducaribe_development2
+  database: honducaribe_development
   pool: 5
   username:
   password: jonthan

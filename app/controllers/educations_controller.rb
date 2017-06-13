@@ -1,4 +1,5 @@
 class EducationsController < ApplicationController
+  
   def new
     @employee = Employee.find(params[:employee_id])
     @education = @employee.educations.build
@@ -13,7 +14,26 @@ class EducationsController < ApplicationController
     else
       redirect_to @employee
     end
-end
+  end
+
+  def edit
+    @employee = Employee.find(params[:employee_id])
+    @education = @employee.educations.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def update
+    @employee = Employee.find(params[:employee_id])
+    @education = @employee.educations.find(params[:id])
+    if @education.update(educations_params)
+      redirect_to @employee, notice: 'Se agrego con exito'
+    else
+      redirect_to @employee
+    end
+  end
 
   protected
 

@@ -158,22 +158,30 @@
                               			<th style= "text-align: center">Fecha Culminacion</th>
                                     <th style= "text-align: center">Completo</th>
                                     <th style= "text-align: center">Constancia</th>
+                                    <th> </th>
                               		</tr>
                               	</thead>
                               	<tbody>
                               			<%- @employee.educations.each do |f| %>
-                              				<tr>
-                              					<td><%= f.school_name %></td>
-                              					<td><%= f.title_description %></td>
-                              					<td><%= nice_date(f.year_start)  %></td>
-                                        <td><%= nice_date(f.year_end)  %></td>
-                                        <% if f.completed %>
-                              					  <td>Si</td>
-                                        <% else %>
-                                          <td>No</td>
-                                        <% end %>
-                                        <td><%= link_to "Descargar",  f.document.url %></td>
-                              				</tr>
+                                      <%unless f.school_name.blank? %>
+                                        <tr>
+                                          <td><%= f.school_name %></td>
+                                          <td><%= f.title_description %></td>
+                                          <td><%= nice_date(f.year_start)  %></td>
+                                          <td><%= nice_date(f.year_end)  %></td>
+                                          <% if f.completed %>
+                                            <td>Si</td>
+                                          <% else %>
+                                            <td>No</td>
+                                          <% end %>
+                                          <td><%= link_to "Descargar",  f.document.url %></td>
+                                          <td>
+                                          <%= link_to edit_employee_education_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editEducation', class: "btn btn-success"}  do %>
+                                            <i class="fa fa-edit m-right-xs"></i> Editar
+                                          <% end %> 
+                                          </td>
+                                        </tr>
+                                      <%end%>
                               			<%- end %>
                               	</tbody>
                               </table>
@@ -631,3 +639,8 @@
           </div>
         </div>
       </div>
+
+      <div class="modal fade" id="editEducation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      
+      </div>    
+
