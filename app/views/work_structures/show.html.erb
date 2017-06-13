@@ -71,12 +71,15 @@
                     <%= link_to new_work_structure_ability_path(@work_structure), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addAbility', class: "btn btn-success"} do %>
                       <i class="fa fa-edit m-right-xs"></i> Anadir Habilidad
                     <% end %>
+                    <%= link_to "Borrar", @work_structure, method: :delete, data: {confirm: "Estas Seguro?", class: "btn btn-danger"}  %>
+
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <div class="modal fade" id="addAbility" tabindex="-1" role="dialog" ar ia-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">

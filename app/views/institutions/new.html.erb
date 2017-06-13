@@ -25,8 +25,9 @@
           <div class="x_title">
             <h2>Formulario</h2>
             <div class="clearfix"></div>
+            <%= render partial: "partials/errors", locals: { obj: @institution } %>
           </div>
-
+          
           <%= form_for @institution do |f| %>
             <%= render partial: "form", locals: {f: f} %>
             <div class="form-group" style="margin: 0 auto; display: block;">

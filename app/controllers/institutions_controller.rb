@@ -1,4 +1,5 @@
 class InstitutionsController < ApplicationController
+
   def index
     @institutions = Institution.all
   end
@@ -15,7 +16,7 @@ class InstitutionsController < ApplicationController
     else
       render :new
     end
-end
+  end
 
   def show
     @institution = Institution.find_by_id(params[:id])
@@ -24,8 +25,10 @@ end
 
   def destroy
     @institution = Institution.find(params[:id])
+    @institution.DeleteReferences
     @institution.destroy
     redirect_to institutions_path, notice: 'Se borro con exito companero'
+
    end
 
   protected

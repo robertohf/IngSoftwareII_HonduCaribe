@@ -52,11 +52,9 @@
                         <li>
                            <%= nice_date(@training.start_date) %>
                         </li>
-                        <% if(Institution.find_by_id(@training.institution_id)) %>
                         <li>
-                           <%= Institution.find_by_id(@training.institution_id).name%>
+                           <%= Institution.find_by_id(@training.institution_id).name if Institution.find_by_id(@training.institution_id) %>
                         </li>
-                        <%end%>
                         <% if(Instructor.find_by_id(@training.instructor_id)) %>
                         <li>
                            <%= Instructor.find_by_id(@training.instructor_id).name %>, <%= Instructor.find_by_id(@training.instructor_id).phone %>, <%= Instructor.find_by_id(@training.instructor_id).email %>
@@ -136,7 +134,11 @@
                                 <%= link_to new_training_training_employee_path(@training), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addEmployee', class: "btn btn-success"} do %>
                                   <i class="fa fa-edit m-right-xs"></i> Invitar Empleado
                                 <% end %>
-                                <%= button_to "Confirmar Hoja de Asistencia", confirmarAsistencia_path(:id => @training.id), method: :post%>
+                                <% if @training.asistenciaConfirmada %>
+                                  <%= button_to "Editar Hoja de Asistencia", reactivarAsistencia_path(:id => @training.id), method: :post%>
+                                <% else %>
+                                  <%= button_to "Confirmar Hoja de Asistencia", confirmarAsistencia_path(:id => @training.id), method: :post%>
+                                <% end %>
                           </div>
 
                         <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab" style="text-align: center">
@@ -158,6 +160,9 @@
                           <%= link_to new_training_ability_path(@training), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addAbility', class: "btn btn-success"} do %>
                             <i class="fa fa-edit m-right-xs"></i> Anadir Habilidad
                           <% end %>
+
+                          <%= button_to "Remover habilidades de empleados", removerHabilidades_path(:id => @training.id), method: :post%>
+
 
 
                              <!-- end of skills -->
@@ -207,18 +212,20 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
         <h4 class="modal-title" id="myModalLabel">Anadir Instructor</h4>
       </div>
-      <%= form_for @training do |f| %>
-      <div class="modal-body">
-        <div class="form-group">
-          <%= f.label :instructor_id, "Instructor" %>
-          <%= f.select(:instructor_id, options_for_select(Institution.find_by_id(@training.institution_id).instructors.pluck(:name, :id)))%>
+      <% if @training.institution_id %>
+        <%= form_for @training do |f| %>
+        <div class="modal-body">
+          <div class="form-group">
+            <%= f.label :instructor_id, "Instructor" %>
+            <%= f.select(:instructor_id, options_for_select(Institution.find_by_id(@training.institution_id).instructors.pluck(:name, :id)))%>
+          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <%= f.submit "Crear" , class: "btn btn-primary"%>
-      </div>
-      <%- end %>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <%= f.submit "Crear" , class: "btn btn-primary"%>
+        </div>
+        <%- end %>
+      <% end %>
     </div>
   </div>
 </div>
@@ -228,12 +235,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="myModalLabel">Invitar Empleado</h4>
+        <h4 class="modal-title" id="myModalLabel">Agregar Habilidad a Capacitacion</h4>
       </div>
       <%= form_for [@training, @training_ability] do |f| %>
       <div class="modal-body">
         <div class="form-group">
-          <%= f.label :ability_id, "Puesto" %>
+          <%= f.label :ability_id, "Habilidad" %>
           <%= f.select(:ability_id, options_for_select(Ability.pluck(:ability, :id)))%>
         </div>
       </div>

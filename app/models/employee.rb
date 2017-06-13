@@ -11,16 +11,18 @@ class Employee < ActiveRecord::Base
 
   validates_attachment_content_type :image, content_type: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
 
-  has_many :educations
-  has_many :work_exps
-  has_many :dependants
-  has_many :employee_abilities
+  has_many :educations, dependent: :destroy
+  has_many :work_exps, dependent: :destroy
+  has_many :dependants, dependent: :destroy
+  has_many :employee_abilities, dependent: :destroy
   has_many :abilities, through: :employee_abilities
   belongs_to :work_structure
-  has_many :training_employees
+  has_many :training_employees, dependent: :destroy
   has_many :trainings, through: :training_employees
-  has_many :hours
-  has_many :permissions
+  has_many :hours, dependent: :destroy
+  has_many :permissions, dependent: :destroy
+
+  validates_presence_of :name
 
   def self.civil_statuses
     ['Soltero', 'Casado', 'Viudo', 'Divorciado', 'Union Libre']
@@ -86,7 +88,7 @@ class Employee < ActiveRecord::Base
     hours['Extra'] = hours['25'] + hours['50'] + hours['75'] + hours['100']
     self.permissions.where(time_in: time_in.in_time_zone('UTC').beginning_of_day..time_out.in_time_zone('UTC').end_of_day).each do |x|
       if x.time_out.present? and x.time_in.present?
-        if x.time_out.hour - x.time_in.hour > 8 
+        if x.time_out.hour - x.time_in.hour > 8
           if x.permission_type == "Vacaciones"
             hours['VAC'] += 8
           elsif x.permission_type == "Sin Permiso"
@@ -121,7 +123,38 @@ class Employee < ActiveRecord::Base
 
   end
 
+  def self.RemoveTrainingAbilities(trainingId, employeeId)
+    @employee = Employee.find(employeeId)
+    @employee_abilities = @employee.employee_abilities.all
+
+    @employee_abilities.each do |a|
+      if a.training_id == trainingId
+        a.destroy
+      end
+    end
+  end
 
 
+    def self.RemoveTrainingReferences(trainingId, employeeId)
+      @employee = Employee.find(employeeId)
+      @employee_abilities = @employee.employee_abilities.all
+
+      @employee_abilities.each do |a|
+        if a.training_id == trainingId
+          a.training_id = nil
+          a.save
+        end
+      end
+    end
+
+    def self.RemoveWorkReferences(workId, employeeId)
+
+      @employee = Employee.find(employeeId)
+      if @employee.work_structure_id == workId
+        @employee.work_structure_id = nil
+        @employee.save
+      end
+
+    end
 
 end

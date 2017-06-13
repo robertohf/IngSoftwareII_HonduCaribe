@@ -13,7 +13,7 @@
         <td><%= f.work_id%></td>
         <td><%= link_to f.name, employee_path(f) %></td>
         <td>
-          <% if(WorkStructure.find(f.work_structure_id)) %>
+          <% if(f.work_structure_id && WorkStructure.find(f.work_structure_id)) %>
             <%= WorkStructure.find(f.work_structure_id).department %>
           <%end%>
         </td>
