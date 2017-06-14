@@ -35,6 +35,13 @@ class EducationsController < ApplicationController
     end
   end
 
+  def destroy
+    @employee = Employee.find(params[:employee_id])
+    @education = @employee.educations.find(params[:id])
+    @education.destroy
+    redirect_to @employee,  notice: "Se borro con exito"
+  end
+
   protected
 
   def educations_params

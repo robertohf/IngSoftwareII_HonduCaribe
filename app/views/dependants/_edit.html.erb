@@ -1,0 +1,36 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="myModalLabel">Editar Dependiente</h4>
+        </div>
+        <%= form_for [@employee, @dependant] do |f| %>
+        <div class="modal-body">
+        <div class="form-group">
+            <%= f.label :name, "Nombre" %>
+            <%= f.text_field :name, class: "form-control", placeholder: "Nombre" %>
+        </div>
+        <div class="form-group">
+            <%= f.label :relation, "Parentesco" %>
+            <%= f.select :relation, Employee.parentesco, {}, class: "form-control"%>
+        </div>
+        <div class="form-group">
+            <%= f.label :email, "Correo" %>
+            <%= f.email_field :email, class: "form-control", placeholder: "Correo"%>
+        </div>
+        <div class="form-group">
+            <%= f.label :phone, "Telefono" %>
+            <%= f.text_field :phone, class: "form-control", placeholder: "Telefono" %>
+        </div>
+        <div class="form-group">
+            <%= f.label :birth_at, "Fecha de Nacimiento" %>
+            <%= f.date_field :birth_at, class: "form-control", placeholder: "Fecha de Nacimiento" %>
+        </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <%= f.submit "Actualizar" , class: "btn btn-primary"%>
+        </div>
+        <%- end %>
+    </div>
+</div>
