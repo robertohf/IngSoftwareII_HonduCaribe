@@ -1,0 +1,1436 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.6
+-- Dumped by pg_dump version 9.5.6
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: abilities; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE abilities (
+    id integer NOT NULL,
+    ability character varying,
+    employee_id integer
+);
+
+
+ALTER TABLE abilities OWNER TO ubuntu;
+
+--
+-- Name: abilities_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE abilities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE abilities_id_seq OWNER TO ubuntu;
+
+--
+-- Name: abilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE abilities_id_seq OWNED BY abilities.id;
+
+
+--
+-- Name: dependants; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE dependants (
+    id integer NOT NULL,
+    name character varying,
+    relation character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    employee_id integer,
+    email character varying,
+    phone character varying,
+    birth_at date
+);
+
+
+ALTER TABLE dependants OWNER TO ubuntu;
+
+--
+-- Name: dependants_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE dependants_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dependants_id_seq OWNER TO ubuntu;
+
+--
+-- Name: dependants_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE dependants_id_seq OWNED BY dependants.id;
+
+
+--
+-- Name: educations; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE educations (
+    id integer NOT NULL,
+    school_name character varying,
+    year_start timestamp without time zone,
+    year_end timestamp without time zone,
+    completed boolean,
+    title_description text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    employee_id integer,
+    constancia character varying,
+    document_file_name character varying,
+    document_content_type character varying,
+    document_file_size integer,
+    document_updated_at timestamp without time zone
+);
+
+
+ALTER TABLE educations OWNER TO ubuntu;
+
+--
+-- Name: educations_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE educations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE educations_id_seq OWNER TO ubuntu;
+
+--
+-- Name: educations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE educations_id_seq OWNED BY educations.id;
+
+
+--
+-- Name: employee_abilities; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE employee_abilities (
+    id integer NOT NULL,
+    employee_id integer,
+    ability_id integer,
+    training_id integer
+);
+
+
+ALTER TABLE employee_abilities OWNER TO ubuntu;
+
+--
+-- Name: employee_abilities_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE employee_abilities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE employee_abilities_id_seq OWNER TO ubuntu;
+
+--
+-- Name: employee_abilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE employee_abilities_id_seq OWNED BY employee_abilities.id;
+
+
+--
+-- Name: employee_trainings; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE employee_trainings (
+    id integer NOT NULL,
+    employee_id integer,
+    training_id integer
+);
+
+
+ALTER TABLE employee_trainings OWNER TO ubuntu;
+
+--
+-- Name: employee_trainings_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE employee_trainings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE employee_trainings_id_seq OWNER TO ubuntu;
+
+--
+-- Name: employee_trainings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE employee_trainings_id_seq OWNED BY employee_trainings.id;
+
+
+--
+-- Name: employees; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE employees (
+    id integer NOT NULL,
+    name character varying,
+    profession text,
+    birth_at date,
+    birth_place text,
+    date_admission date,
+    salary numeric,
+    base_belong character varying,
+    civil_status character varying,
+    address text,
+    blood_type character varying,
+    emergency_contact_name character varying,
+    emergency_contact_number integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    work_id integer,
+    last_work character varying,
+    email character varying,
+    "RAP_code" character varying,
+    cellphone integer,
+    bank_account integer,
+    contract_type character varying,
+    gender character varying,
+    employee_status boolean,
+    supression_motive character varying,
+    supression_date timestamp without time zone,
+    identity_number character varying,
+    position_id integer,
+    avatar character varying,
+    work_structure_id integer,
+    ability_id integer,
+    "hasChildren" boolean,
+    image_file_name character varying,
+    image_content_type character varying,
+    image_file_size integer,
+    image_updated_at timestamp without time zone,
+    scheduletype character varying
+);
+
+
+ALTER TABLE employees OWNER TO ubuntu;
+
+--
+-- Name: employees_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE employees_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE employees_id_seq OWNER TO ubuntu;
+
+--
+-- Name: employees_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE employees_id_seq OWNED BY employees.id;
+
+
+--
+-- Name: horas; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE horas (
+    id integer NOT NULL,
+    employee_id integer,
+    fecha timestamp without time zone,
+    hora_entrada time without time zone,
+    hora_salida time without time zone
+);
+
+
+ALTER TABLE horas OWNER TO ubuntu;
+
+--
+-- Name: horas_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE horas_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE horas_id_seq OWNER TO ubuntu;
+
+--
+-- Name: horas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE horas_id_seq OWNED BY horas.id;
+
+
+--
+-- Name: hours; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE hours (
+    id integer NOT NULL,
+    employee_id integer,
+    date timestamp without time zone,
+    time_in timestamp without time zone,
+    time_out timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE hours OWNER TO ubuntu;
+
+--
+-- Name: hours_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE hours_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hours_id_seq OWNER TO ubuntu;
+
+--
+-- Name: hours_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE hours_id_seq OWNED BY hours.id;
+
+
+--
+-- Name: institutions; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE institutions (
+    id integer NOT NULL,
+    name character varying,
+    email character varying,
+    description text,
+    phone character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE institutions OWNER TO ubuntu;
+
+--
+-- Name: institutions_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE institutions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE institutions_id_seq OWNER TO ubuntu;
+
+--
+-- Name: institutions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE institutions_id_seq OWNED BY institutions.id;
+
+
+--
+-- Name: instructors; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE instructors (
+    id integer NOT NULL,
+    name character varying,
+    email character varying,
+    description text,
+    phone character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    institution_id integer
+);
+
+
+ALTER TABLE instructors OWNER TO ubuntu;
+
+--
+-- Name: instructors_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE instructors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE instructors_id_seq OWNER TO ubuntu;
+
+--
+-- Name: instructors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE instructors_id_seq OWNED BY instructors.id;
+
+
+--
+-- Name: permissions; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE permissions (
+    id integer NOT NULL,
+    employee_id integer,
+    time_in timestamp without time zone,
+    time_out timestamp without time zone,
+    permission_type character varying
+);
+
+
+ALTER TABLE permissions OWNER TO ubuntu;
+
+--
+-- Name: permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE permissions_id_seq OWNER TO ubuntu;
+
+--
+-- Name: permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE permissions_id_seq OWNED BY permissions.id;
+
+
+--
+-- Name: position_abilities; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE position_abilities (
+    id integer NOT NULL,
+    position_id integer,
+    ability_id integer
+);
+
+
+ALTER TABLE position_abilities OWNER TO ubuntu;
+
+--
+-- Name: position_abilities_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE position_abilities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE position_abilities_id_seq OWNER TO ubuntu;
+
+--
+-- Name: position_abilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE position_abilities_id_seq OWNED BY position_abilities.id;
+
+
+--
+-- Name: position_trainings; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE position_trainings (
+    id integer NOT NULL,
+    position_id integer,
+    training_id integer
+);
+
+
+ALTER TABLE position_trainings OWNER TO ubuntu;
+
+--
+-- Name: position_trainings_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE position_trainings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE position_trainings_id_seq OWNER TO ubuntu;
+
+--
+-- Name: position_trainings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE position_trainings_id_seq OWNED BY position_trainings.id;
+
+
+--
+-- Name: positions; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE positions (
+    id integer NOT NULL,
+    name_position text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    work_structure_id integer
+);
+
+
+ALTER TABLE positions OWNER TO ubuntu;
+
+--
+-- Name: positions_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE positions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE positions_id_seq OWNER TO ubuntu;
+
+--
+-- Name: positions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE positions_id_seq OWNED BY positions.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE schema_migrations (
+    version character varying NOT NULL
+);
+
+
+ALTER TABLE schema_migrations OWNER TO ubuntu;
+
+--
+-- Name: training_abilities; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE training_abilities (
+    id integer NOT NULL,
+    ability_id integer,
+    training_id integer
+);
+
+
+ALTER TABLE training_abilities OWNER TO ubuntu;
+
+--
+-- Name: training_abilities_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE training_abilities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE training_abilities_id_seq OWNER TO ubuntu;
+
+--
+-- Name: training_abilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE training_abilities_id_seq OWNED BY training_abilities.id;
+
+
+--
+-- Name: training_employees; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE training_employees (
+    id integer NOT NULL,
+    employee_id integer,
+    training_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    asistencia boolean
+);
+
+
+ALTER TABLE training_employees OWNER TO ubuntu;
+
+--
+-- Name: training_employees_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE training_employees_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE training_employees_id_seq OWNER TO ubuntu;
+
+--
+-- Name: training_employees_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE training_employees_id_seq OWNED BY training_employees.id;
+
+
+--
+-- Name: trainings; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE trainings (
+    id integer NOT NULL,
+    training_name character varying,
+    check_employee boolean,
+    check_intern boolean,
+    check_exterior boolean,
+    duration integer,
+    start_date timestamp without time zone,
+    end_date timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    instructor_id integer,
+    institution_id integer,
+    planned boolean,
+    category character varying,
+    "asistenciaConfirmada" boolean
+);
+
+
+ALTER TABLE trainings OWNER TO ubuntu;
+
+--
+-- Name: trainings_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE trainings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE trainings_id_seq OWNER TO ubuntu;
+
+--
+-- Name: trainings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE trainings_id_seq OWNED BY trainings.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    email character varying,
+    name character varying,
+    password_digest character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE users OWNER TO ubuntu;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE users_id_seq OWNER TO ubuntu;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: work_exps; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE work_exps (
+    id integer NOT NULL,
+    company_name character varying,
+    year_start timestamp without time zone,
+    year_end timestamp without time zone,
+    "position" text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    employee_id integer,
+    constancia character varying,
+    document_file_name character varying,
+    document_content_type character varying,
+    document_file_size integer,
+    document_updated_at timestamp without time zone
+);
+
+
+ALTER TABLE work_exps OWNER TO ubuntu;
+
+--
+-- Name: work_exps_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE work_exps_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE work_exps_id_seq OWNER TO ubuntu;
+
+--
+-- Name: work_exps_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE work_exps_id_seq OWNED BY work_exps.id;
+
+
+--
+-- Name: work_structure_abilities; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE work_structure_abilities (
+    id integer NOT NULL,
+    ability_id integer,
+    work_structure_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE work_structure_abilities OWNER TO ubuntu;
+
+--
+-- Name: work_structure_abilities_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE work_structure_abilities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE work_structure_abilities_id_seq OWNER TO ubuntu;
+
+--
+-- Name: work_structure_abilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE work_structure_abilities_id_seq OWNED BY work_structure_abilities.id;
+
+
+--
+-- Name: work_structures; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE work_structures (
+    id integer NOT NULL,
+    department character varying,
+    area character varying,
+    sub_area character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    field_code character varying,
+    area_code character varying,
+    code_department character varying
+);
+
+
+ALTER TABLE work_structures OWNER TO ubuntu;
+
+--
+-- Name: work_structures_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE work_structures_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE work_structures_id_seq OWNER TO ubuntu;
+
+--
+-- Name: work_structures_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE work_structures_id_seq OWNED BY work_structures.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY abilities ALTER COLUMN id SET DEFAULT nextval('abilities_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY dependants ALTER COLUMN id SET DEFAULT nextval('dependants_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY educations ALTER COLUMN id SET DEFAULT nextval('educations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY employee_abilities ALTER COLUMN id SET DEFAULT nextval('employee_abilities_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY employee_trainings ALTER COLUMN id SET DEFAULT nextval('employee_trainings_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY employees ALTER COLUMN id SET DEFAULT nextval('employees_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY horas ALTER COLUMN id SET DEFAULT nextval('horas_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY hours ALTER COLUMN id SET DEFAULT nextval('hours_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY institutions ALTER COLUMN id SET DEFAULT nextval('institutions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY instructors ALTER COLUMN id SET DEFAULT nextval('instructors_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY permissions ALTER COLUMN id SET DEFAULT nextval('permissions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY position_abilities ALTER COLUMN id SET DEFAULT nextval('position_abilities_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY position_trainings ALTER COLUMN id SET DEFAULT nextval('position_trainings_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY positions ALTER COLUMN id SET DEFAULT nextval('positions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY training_abilities ALTER COLUMN id SET DEFAULT nextval('training_abilities_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY training_employees ALTER COLUMN id SET DEFAULT nextval('training_employees_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY trainings ALTER COLUMN id SET DEFAULT nextval('trainings_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY work_exps ALTER COLUMN id SET DEFAULT nextval('work_exps_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY work_structure_abilities ALTER COLUMN id SET DEFAULT nextval('work_structure_abilities_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY work_structures ALTER COLUMN id SET DEFAULT nextval('work_structures_id_seq'::regclass);
+
+
+--
+-- Name: abilities_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY abilities
+    ADD CONSTRAINT abilities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dependants_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY dependants
+    ADD CONSTRAINT dependants_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: educations_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY educations
+    ADD CONSTRAINT educations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: employee_abilities_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY employee_abilities
+    ADD CONSTRAINT employee_abilities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: employee_trainings_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY employee_trainings
+    ADD CONSTRAINT employee_trainings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: employees_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY employees
+    ADD CONSTRAINT employees_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: horas_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY horas
+    ADD CONSTRAINT horas_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hours_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY hours
+    ADD CONSTRAINT hours_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: institutions_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY institutions
+    ADD CONSTRAINT institutions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: instructors_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY instructors
+    ADD CONSTRAINT instructors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY permissions
+    ADD CONSTRAINT permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: position_abilities_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY position_abilities
+    ADD CONSTRAINT position_abilities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: position_trainings_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY position_trainings
+    ADD CONSTRAINT position_trainings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: positions_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY positions
+    ADD CONSTRAINT positions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: training_abilities_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY training_abilities
+    ADD CONSTRAINT training_abilities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: training_employees_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY training_employees
+    ADD CONSTRAINT training_employees_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: trainings_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY trainings
+    ADD CONSTRAINT trainings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: work_exps_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY work_exps
+    ADD CONSTRAINT work_exps_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: work_structure_abilities_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY work_structure_abilities
+    ADD CONSTRAINT work_structure_abilities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: work_structures_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY work_structures
+    ADD CONSTRAINT work_structures_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_educations_on_employee_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_educations_on_employee_id ON educations USING btree (employee_id);
+
+
+--
+-- Name: index_employee_abilities_on_ability_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_employee_abilities_on_ability_id ON employee_abilities USING btree (ability_id);
+
+
+--
+-- Name: index_employee_abilities_on_employee_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_employee_abilities_on_employee_id ON employee_abilities USING btree (employee_id);
+
+
+--
+-- Name: index_employee_trainings_on_employee_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_employee_trainings_on_employee_id ON employee_trainings USING btree (employee_id);
+
+
+--
+-- Name: index_employee_trainings_on_training_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_employee_trainings_on_training_id ON employee_trainings USING btree (training_id);
+
+
+--
+-- Name: index_employees_on_position_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_employees_on_position_id ON employees USING btree (position_id);
+
+
+--
+-- Name: index_instructors_on_institution_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_instructors_on_institution_id ON instructors USING btree (institution_id);
+
+
+--
+-- Name: index_position_abilities_on_ability_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_position_abilities_on_ability_id ON position_abilities USING btree (ability_id);
+
+
+--
+-- Name: index_position_abilities_on_position_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_position_abilities_on_position_id ON position_abilities USING btree (position_id);
+
+
+--
+-- Name: index_position_trainings_on_position_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_position_trainings_on_position_id ON position_trainings USING btree (position_id);
+
+
+--
+-- Name: index_position_trainings_on_training_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_position_trainings_on_training_id ON position_trainings USING btree (training_id);
+
+
+--
+-- Name: index_positions_on_work_structure_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_positions_on_work_structure_id ON positions USING btree (work_structure_id);
+
+
+--
+-- Name: index_training_abilities_on_ability_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_training_abilities_on_ability_id ON training_abilities USING btree (ability_id);
+
+
+--
+-- Name: index_training_abilities_on_training_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_training_abilities_on_training_id ON training_abilities USING btree (training_id);
+
+
+--
+-- Name: index_work_exps_on_employee_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_work_exps_on_employee_id ON work_exps USING btree (employee_id);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: fk_rails_06abb4ef38; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY positions
+    ADD CONSTRAINT fk_rails_06abb4ef38 FOREIGN KEY (work_structure_id) REFERENCES work_structures(id);
+
+
+--
+-- Name: fk_rails_0a27c762e3; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY position_abilities
+    ADD CONSTRAINT fk_rails_0a27c762e3 FOREIGN KEY (position_id) REFERENCES positions(id);
+
+
+--
+-- Name: fk_rails_0de7dd00be; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY educations
+    ADD CONSTRAINT fk_rails_0de7dd00be FOREIGN KEY (employee_id) REFERENCES employees(id);
+
+
+--
+-- Name: fk_rails_25c4b903c0; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY instructors
+    ADD CONSTRAINT fk_rails_25c4b903c0 FOREIGN KEY (institution_id) REFERENCES institutions(id);
+
+
+--
+-- Name: fk_rails_37f6b48912; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY work_exps
+    ADD CONSTRAINT fk_rails_37f6b48912 FOREIGN KEY (employee_id) REFERENCES employees(id);
+
+
+--
+-- Name: fk_rails_6a5b625010; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY position_trainings
+    ADD CONSTRAINT fk_rails_6a5b625010 FOREIGN KEY (position_id) REFERENCES positions(id);
+
+
+--
+-- Name: fk_rails_83cb9f3535; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY employee_trainings
+    ADD CONSTRAINT fk_rails_83cb9f3535 FOREIGN KEY (employee_id) REFERENCES employees(id);
+
+
+--
+-- Name: fk_rails_8425ebe6a1; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY employees
+    ADD CONSTRAINT fk_rails_8425ebe6a1 FOREIGN KEY (position_id) REFERENCES positions(id);
+
+
+--
+-- Name: fk_rails_abbd6fce05; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY employee_abilities
+    ADD CONSTRAINT fk_rails_abbd6fce05 FOREIGN KEY (employee_id) REFERENCES employees(id);
+
+
+--
+-- Name: fk_rails_af0b99ccd8; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY position_abilities
+    ADD CONSTRAINT fk_rails_af0b99ccd8 FOREIGN KEY (ability_id) REFERENCES abilities(id);
+
+
+--
+-- Name: fk_rails_d44f5df402; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY training_abilities
+    ADD CONSTRAINT fk_rails_d44f5df402 FOREIGN KEY (training_id) REFERENCES trainings(id);
+
+
+--
+-- Name: fk_rails_d54c466b9e; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY employee_trainings
+    ADD CONSTRAINT fk_rails_d54c466b9e FOREIGN KEY (training_id) REFERENCES trainings(id);
+
+
+--
+-- Name: fk_rails_d62c025e17; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY employee_abilities
+    ADD CONSTRAINT fk_rails_d62c025e17 FOREIGN KEY (ability_id) REFERENCES abilities(id);
+
+
+--
+-- Name: fk_rails_d8d6078de5; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY position_trainings
+    ADD CONSTRAINT fk_rails_d8d6078de5 FOREIGN KEY (training_id) REFERENCES trainings(id);
+
+
+--
+-- Name: fk_rails_ddb008aeff; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY training_abilities
+    ADD CONSTRAINT fk_rails_ddb008aeff FOREIGN KEY (ability_id) REFERENCES abilities(id);
+
+
+--
+-- Name: fk_rails_e0db334b9a; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY hours
+    ADD CONSTRAINT fk_rails_e0db334b9a FOREIGN KEY (employee_id) REFERENCES employees(id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

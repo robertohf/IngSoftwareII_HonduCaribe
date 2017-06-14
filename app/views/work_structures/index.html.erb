@@ -39,6 +39,7 @@
               </thead>
               <tbody>
                 <%- @work_structures.each do |f| %>
+                  <% unless f.department.blank? %>
                   <tr>
                     <td><%= f.area_code%></td>
                     <% s = f.department.to_s %>
@@ -46,9 +47,12 @@
                     <td><%= link_to f.area, work_structure_path(f) %></td>
                     <td><%= f.sub_area %></td>
                     <th>
-
+                      <%= link_to edit_work_structure_path(f.id, f), class: "btn btn-success" do %>
+                        <i class="fa fa-edit m-right-xs"></i> Editar
+                      <% end %>
                     </th>
                   </tr>
+                  <% end %>
                 <%- end %>
               </tbody>
             </table>

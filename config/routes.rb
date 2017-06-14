@@ -31,6 +31,9 @@ Rails.application.routes.draw do
     resources :instructors
   end
 
+
+  resources :instructors
+
   resources :trainings do
     resources :employees
     resources :training_employees
@@ -66,6 +69,8 @@ Rails.application.routes.draw do
 
   get '/bonoEducativo' => 'employees#bonoEducativo'
   post '/confirmarAsistencia' => 'trainings#confirmarAsistencia'
+  post '/reactivarAsistencia' => 'trainings#reactivarAsistencia'
+  post '/removerHabilidades' => 'trainings#removerHabilidades'
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'

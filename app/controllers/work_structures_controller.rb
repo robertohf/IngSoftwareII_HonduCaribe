@@ -42,6 +42,14 @@ class WorkStructuresController < ApplicationController
     @dept = params[:department].to_s
   end
 
+  def destroy
+
+    @work_structure = WorkStructure.find(params[:id])
+    @work_structure.RemoveReferencesFromEmployees
+    @work_structure.destroy
+    redirect_to work_structures_path
+  end
+
   protected
 
   def work_structure_params

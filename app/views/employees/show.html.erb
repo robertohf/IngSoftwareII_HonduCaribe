@@ -52,7 +52,7 @@
                       <h3><%=@employee.name%></h3>
 
                       <ul class="list-unstyled user_data">
-                        <%if(WorkStructure.find(@employee.work_structure_id)) %>
+                        <%if(@employee.work_structure_id && WorkStructure.find(@employee.work_structure_id)) %>
                         <li>
                           <i class="fa fa-user user-profile-icon"></i> <%= WorkStructure.find(@employee.work_structure_id).department %> - <%= WorkStructure.find(@employee.work_structure_id).area %>
                         </li>
@@ -158,22 +158,30 @@
                               			<th style= "text-align: center">Fecha Culminacion</th>
                                     <th style= "text-align: center">Completo</th>
                                     <th style= "text-align: center">Constancia</th>
+                                    <th> </th>
                               		</tr>
                               	</thead>
                               	<tbody>
                               			<%- @employee.educations.each do |f| %>
-                              				<tr>
-                              					<td><%= f.school_name %></td>
-                              					<td><%= f.title_description %></td>
-                              					<td><%= nice_date(f.year_start)  %></td>
-                                        <td><%= nice_date(f.year_end)  %></td>
-                                        <% if f.completed %>
-                              					  <td>Si</td>
-                                        <% else %>
-                                          <td>No</td>
-                                        <% end %>
-                                        <td><%= link_to "Descargar",  f.document.url %></td>
-                              				</tr>
+                                      <%unless f.school_name.blank? %>
+                                        <tr>
+                                          <td><%= f.school_name %></td>
+                                          <td><%= f.title_description %></td>
+                                          <td><%= nice_date(f.year_start)  %></td>
+                                          <td><%= nice_date(f.year_end)  %></td>
+                                          <% if f.completed %>
+                                            <td>Si</td>
+                                          <% else %>
+                                            <td>No</td>
+                                          <% end %>
+                                          <td><%= link_to "Descargar",  f.document.url %></td>
+                                          <td>
+                                          <%= link_to edit_employee_education_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editEducation', class: "btn btn-success"}  do %>
+                                            <i class="fa fa-edit m-right-xs"></i> Editar
+                                          <% end %> 
+                                          </td>
+                                        </tr>
+                                      <%end%>
                               			<%- end %>
                               	</tbody>
                               </table>
@@ -321,13 +329,13 @@
                               <table class="data table table-striped no-margin" style="text-align: center; ">
                                 <thead>
                                   <tr>
-                                    <th style= "text-align: center">Habilidad</th>
+                                    <th style= "text-align: center"> Rerfil Academico </th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                     <%- @abilities_training.each do |f| %>
                                       <tr>
-                                        <td><%= Ability.find(f.ability_id).ability %></td>
+                                        <td><%= Ability.find(f.ability_id).ability if Ability.find(f.ability_id).ability  %></td>
                                         <td>
                                          <% if f.training_id %>
                                           <%= Training.find(f.training_id).training_name %>
@@ -350,25 +358,25 @@
                               <table class="data table table-striped no-margin" style="text-align: center; width: 100%">
                                 <thead>
                                   <tr>
-                                    <th style= "text-align: center">Habilidades De Puesto</th>
+                                    <th style= "text-align: center">Requerimientos De Puesto</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                <%-if @work_structure_of_employee.abilities.any? %>
+                                  <%-if @employee.work_structure_id && @work_structure_of_employee.abilities.any? %>
                                     <%- @work_structure_of_employee.abilities.each do |f| %>
                                       <tr>
                                         <td><%= f.ability %></td>
                                       </tr>
                                     <%- end %>
                                 <% else %>
-                                <p><em>No hay habilidades</em></p>
+                                <p><em>No hay Requerimientos de puesto</em></p>
                                 <% end %>
                                 </tbody>
                             </table>
                             </div>
 
                             <%= link_to new_employee_ability_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addAbility', class: "btn btn-success"} do %>
-                               <i class="fa fa-edit m-right-xs"></i> Anadir Habilidad
+                               <i class="fa fa-edit m-right-xs"></i> Anadir Requerimiento a Usuario
                              <% end %>
 
                           </div>
@@ -511,8 +519,12 @@
               <div class="modal-body">
                 <%= f.hidden_field :employee_id, value: @employee.id %>
                 <div class="form-group">
+                  <% if @employee.work_structure_id  %>
                   <%= f.label :ability_id, "Puesto" %>
                   <%= f.select(:ability_id, options_for_select(WorkStructure.find_by_id(@employee.work_structure_id).abilities.pluck(:ability, :id)))%>
+                  <%else%>
+                  <em>Necesita haber seleccionado un puesto de trabajo antes</em>
+                  <% end %>
                 </div>
               </div>
               <div class="modal-footer">
@@ -555,6 +567,45 @@
         </div>
       </div>
 
+      <div class="modal fade" id="addDependant" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+               <h4 class="modal-title" id="myModalLabel">Agregar Dependiente</h4>
+             </div>
+             <%= form_for [@employee, @dependant] do |f| %>
+             <div class="modal-body">
+               <div class="form-group">
+                 <%= f.label :name, "Nombre" %>
+                 <%= f.text_field :name, class: "form-control", placeholder: "Nombre" %>
+               </div>
+               <div class="form-group">
+                 <%= f.label :relation, "Parentesco" %>
+                 <%= f.select :relation, Employee.parentesco, {}, class: "form-control"%>
+               </div>
+               <div class="form-group">
+                 <%= f.label :email, "Correo" %>
+                 <%= f.email_field :email, class: "form-control", placeholder: "Correo"%>
+               </div>
+               <div class="form-group">
+                 <%= f.label :phone, "Telefono" %>
+                 <%= f.text_field :phone, class: "form-control", placeholder: "Telefono" %>
+               </div>
+               <div class="form-group">
+                 <%= f.label :birth_at, "Fecha de Nacimiento" %>
+                 <%= f.date_field :birth_at, class: "form-control", placeholder: "Fecha de Nacimiento" %>
+               </div>
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+               <%= f.submit "Crear" , class: "btn btn-primary"%>
+             </div>
+             <%- end %>
+           </div>
+         </div>
+       </div>
+
       <div class="modal fade" id="addPermission" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -589,3 +640,8 @@
           </div>
         </div>
       </div>
+
+      <div class="modal fade" id="editEducation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      
+      </div>    
+

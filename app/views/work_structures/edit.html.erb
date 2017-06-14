@@ -2,7 +2,7 @@
   <div class="">
     <div class="page-title">
       <div class="title_left">
-        <h3>Nueva Institucion</h3>
+        <h3>Editar Estructura Laboral</h3>
       </div>
 
       <div class="title_right">
@@ -25,16 +25,15 @@
           <div class="x_title">
             <h2>Formulario</h2>
             <div class="clearfix"></div>
-            <%= render partial: "partials/errors", locals: { obj: @institution } %>
           </div>
-          
-          <%= form_for @institution do |f| %>
+          <%= render partial: "partials/errors", locals: { obj: @work_structure } %>
+          <%= form_for @work_structure do |f| %>
             <%= render partial: "form", locals: {f: f} %>
             <div class="form-group" style="margin: 0 auto; display: block;">
               <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                <%= link_to "Cancelar", employees_path, class: "btn btn-primary" %>
+                <%= link_to "Cancelar", work_structures_path, class: "btn btn-primary" %>
                 <button class="btn btn-primary" type="reset">Reset</button>
-                <%= f.submit "Crear" , class: "btn btn-success"%>
+                <%= f.submit "Actualizar" , class: "btn btn-success"%>
               </div>
             </div>
           <%- end %>

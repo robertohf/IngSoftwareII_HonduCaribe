@@ -5,8 +5,9 @@
     <%= f.label :training_name, "Nombre" %>
     <%= f.text_field :training_name, class: "form-control", placeholder: "Nombre de la capacitacion" %>
   </div>
-  <%= f.hidden_field :asistenciaConfirmada, value: false %>
-
+  <% if !@training.asistenciaConfirmada %>
+    <%= f.hidden_field :asistenciaConfirmada, value: false %>
+  <% end %>
   <div class="form-group">
     <%= f.label :start_date, "Fecha de Inicio" %>
     <%= f.date_field :start_date, class: "form-control", placeholder: "Duracion total en Horas" %>

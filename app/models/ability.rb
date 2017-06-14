@@ -8,4 +8,7 @@ class Ability < ActiveRecord::Base
 
   has_many :work_structure_abilities
   has_many :work_structures, through: :work_structure_abilities
+
+  validates_presence_of :ability
+
 end

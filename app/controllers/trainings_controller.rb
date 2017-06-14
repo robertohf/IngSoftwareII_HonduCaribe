@@ -48,15 +48,33 @@ class TrainingsController < ApplicationController
     @training.asistenciaConfirmada = true
     @training.save
 
-    redirect_to @training
+    redirect_to @training, notice: 'Asistencia ha sido confirmada!'
+    return
+  end
+
+  def reactivarAsistencia
+    @training = Training.find(params[:id])
+    @training.asistenciaConfirmada = false
+    @training.save
+
+    redirect_to @training, notice: 'La asistencia ha sido habilitada nuevamente!'
     return
 
+  end
+
+  def removerHabilidades
+    @training = Training.find(params[:id])
+    @training.removerHabilidades
+
+    redirect_to @training, notice: 'Habilidades otorgadas por capacitacion han sido removidas'
+    return
 
   end
 
 
   def destroy
     @training = Training.find(params[:id])
+    @training.RemoverReferencias
     @training.destroy
     redirect_to trainings_path
   end

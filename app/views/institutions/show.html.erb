@@ -27,16 +27,18 @@
                     <th style= "text-align: center">Correo</th>
                     <th style= "text-align: center">Numero</th>
                     <th style= "text-align: center">Descripcion</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <%- @institution.instructors.each do |f| %>
-                    <% if(f) %>
+                    <% if(f.name) %>
                       <tr>
                         <td><%= f.name %></td>
                         <td><%= f.email %></td>
                         <td><%= f.phone %></td>
                         <td><%= f.description %></td>
+                        <td><%= link_to "Eliminar", f, method: :delete, data: {confirm: "Estas Seguro?"}, class: "btn btn-danger" %></td>
                       </tr>
                     <%end%>
                   <%- end %>
@@ -66,7 +68,7 @@
       <div class="modal-body">
         <div class="form-group">
           <%= f.label :name, "Nombre" %>
-          <%= f.text_field :name, class: "form-control", placeholder: "Nombre de la Institucion" %>
+          <%= f.text_field :name, class: "form-control", placeholder: "Nombre del Instructor" %>
         </div>
 
         <div class="form-group">

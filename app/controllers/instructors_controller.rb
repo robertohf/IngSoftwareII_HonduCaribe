@@ -11,9 +11,17 @@ class InstructorsController < ApplicationController
     if @instructor.save
       redirect_to @institution, notice: 'Se agrego con exito'
     else
-      render :new
+      redirect_to @institution, notice: 'Ingrese nombre correcto'
     end
  end
+
+ def destroy
+   @instructor = Instructor.find(params[:id])
+   @instructor.destroy
+   redirect_to institutions_path, notice: 'Se borro con exito companero'
+
+  end
+
 
   protected
 
