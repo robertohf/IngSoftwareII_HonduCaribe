@@ -305,18 +305,19 @@
 
                           </div>
                           <div role="tabpanel" class="tab-pane fade" id="tab_content6" aria-labelledby="profile-tab" style="text-align: center">
-                            <%= form_for(:report, remote: true, html: {id:"date_form", class:"row"}) do |f| %>
+                            <%= form_for(:report, url: employee_hours_graph_path(@employee), remote: true, html: {id:"date_form", class:"row"}) do |f| %>
                               <div class="col-xs-6">
                                 <%= f.label :from, "Desde: ", class:"col-xs-2" %>
-                                <%= f.date_field :from, class: "form-control col-xs-10", value: Date.today, onchange: "$('#date_form').submit();" %>
+                                <%= f.date_field :from, class: "col-xs-9", value: Date.today, onchange: "$('#date_form').submit();" %>
                               </div>
                               <div class="col-xs-6">
                                 <%= f.label :to, "Hasta: ", class:"col-xs-2"%>
-                                <%= f.date_field :to, class: "form-control col-xs-10", value: Date.today, onchange: "$('#date_form').submit();" %>
+                                <%= f.date_field :to, class: "col-xs-9", value: Date.today, onchange: "$('#date_form').submit();" %>
                               </div>
                             <% end %>
                             <div id="hours_show">
-                              <%= render partial: "hours_show", locals: {employee: @employee, from: Date.today, to: Date.today} %>
+                              <% employee = @employee %>
+                              <%= render partial: "hours_show", locals: {employee: employee, from: Date.today, to: Date.today.tomorrow} %>
                             </div>
                           </div>
 

@@ -1,0 +1,24 @@
+<div id="chart_div" style="margin: 0px auto; width:50%">
+  <% data_val =  employee.hours.where("time_in >= '#{from}' AND time_out <= '#{to}'").pluck("time_in, time_out").map{|val| ((val[1] - val[0]) / 1.hour).round} %>
+  <% puts data_val %>
+  <% data = {
+    datasets:
+      [
+        {
+          data: data_val,
+          backgroundColor: "rgba(61, 198, 185, 0.7)",
+          borderColor: "rgba(0,0,0,1)"
+        }
+      ]
+  } %>
+
+  <% options = {
+    legend: {display: false},
+    scales: {yAxes: [{ticks: {beginAtZero:true}}]},
+    title: {display: true, text: "Cantidad De Horas"}
+  } %>
+
+  <div>
+    <%= line_chart data, options %>
+  </div>
+</div>

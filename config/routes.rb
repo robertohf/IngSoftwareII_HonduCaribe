@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :training_employees
     resources :hours
     resources :permissions
+    post 'hours_graph'
   end
 
   resources :institutions do
