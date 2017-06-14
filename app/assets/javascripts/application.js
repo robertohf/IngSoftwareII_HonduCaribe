@@ -43,3 +43,4 @@
 //= require flash.js
 
 //= require misc
+//= require Chart.min

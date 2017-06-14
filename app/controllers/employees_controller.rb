@@ -1,8 +1,15 @@
 class EmployeesController < ApplicationController
+  def hours_graph
+    respond_to do |format|
+      format.html
+      format.js { render "hours_graph", locals: { employee: Employee.find(params[:employee_id]), from: Date.parse(params[:report][:from]), to: Date.parse(params[:report][:to]).next_day } }
+    end
+  end
+
   def hours_show
     respond_to do |format|
       format.html
-      format.js { render 'hours_show', locals: { employee: Employee.find(params[:employee_id]), from: params[:report][:from], to: params[:report][:to] } }
+      format.js { render partial: 'hours_show', locals: { employee: Employee.find(params[:employee_id]), from: Date.parse(params[:report][:from]), to: Date.parse(params[:report][:to]).next_day } }
     end
   end
 

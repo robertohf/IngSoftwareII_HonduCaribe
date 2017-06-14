@@ -16,6 +16,7 @@
       <%- end %>
   </tbody>
 </table>
-<%= link_to new_employee_hour_path(employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addHours', class: "btn btn-success"} do %>
+<%= render partial: "hours_graph", locals: {employee: employee, from: from, to: to} %>
+<%= link_to new_employee_hour_path(employee), {remote: true, 'data-toggle':  "modal", 'data-target': '#addHours', class: "btn btn-success"} do %>
   <i class="fa fa-edit m-right-xs"></i> Anadir Horas
 <% end %>
