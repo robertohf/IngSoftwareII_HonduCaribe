@@ -8,7 +8,7 @@
   </thead>
   <tbody>
       <%- employee.hours.each do |f| %>
-        <% if (f.time_in..f.time_out).overlaps?(from..to) %>
+        <% if (f.time_in..f.time_out).overlaps?(from.to_time.beginning_of_day..to.to_time.end_of_day) %>
           <tr>
             <td><%= nice_date_time(f.time_in) %></td>
             <td><%= nice_date_time(f.time_out) %></td>

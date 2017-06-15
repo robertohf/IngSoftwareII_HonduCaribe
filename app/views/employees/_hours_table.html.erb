@@ -15,21 +15,21 @@
     </tr>
   </thead>
   <tbody>
-    <%- employees.each do |f| %>
-      <%- hours = f.get_hours(time_in, time_out) %>
+    <% employees.each do |f| %>
+      <% hours = f.get_hours(time_in.to_time.beginning_of_day, time_out.to_time.end_of_day) %>
       <tr>
         <td><%= f.work_id%></td>
         <td><%= link_to f.name, employee_path(f) %></td>
-        <td><%= hours["normal"] %></td>
-        <td><%= hours["25"] %></td>
-        <td><%= hours["50"] %></td>
-        <td><%= hours["75"] %></td>
-        <td><%= hours["100"] %></td>
-        <td><%= hours["Extra"] %></td>
+        <td><%= (hours["normal"]/60).to_s + ":" + format('%02d', hours["normal"]%60) %></td>
+        <td><%= (hours["25"]/60).to_s + ":" + format('%02d', hours["25"]%60) %></td>
+        <td><%= (hours["50"]/60).to_s + ":" + format('%02d', hours["50"]%60) %></td>
+        <td><%= (hours["75"]/60).to_s + ":" + format('%02d', hours["75"]%60) %></td>
+        <td><%= (hours["100"]/60).to_s + ":" + format('%02d', hours["100"]%60) %></td>
+        <td><%= (hours["Extra"]/60).to_s + ":" +  format('%02d',hours["Extra"]%60) %></td>
         <td><%= hours["VAC"] %></td>
         <td><%= hours["ASP"] %></td>
-        <td><%= hours["ACP"] %></td> 
+        <td><%= hours["ACP"] %></td>
       </tr>
-    <%- end %>
+    <% end %>
   </tbody>
 </table>

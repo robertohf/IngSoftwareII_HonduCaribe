@@ -69,16 +69,81 @@ class Employee < ActiveRecord::Base
     hours['VAC'] = 0
     hours['ASP'] = 0
     hours['ACP'] = 0
-    self.hours.where(time_in: time_in.in_time_zone('UTC').beginning_of_day..time_out.in_time_zone('UTC').end_of_day).each do |h|
-      (h.time_in.to_i..h.time_out.to_i).step(1.hour) do |x|
-        hours['normal'] += ((h.time_in.change(hour: 8)..h.time_out.change(hour: 17)).cover?(Time.at(x)) ? 1 : 0)
-        hours['25'] += ((h.time_in.change(hour: 17)..h.time_out.change(hour: 21)).cover?(Time.at(x)) ? 1 : 0)
-        hours['50'] += ((h.time_in.change(hour: 21)..h.time_out.change(hour: 0)).cover?(Time.at(x)) ? 1 : 0)
-        hours['75'] += ((h.time_in.change(hour: 4)..h.time_out.change(hour: 8)).cover?(Time.at(x)) ? 1 : 0)
-        hours['100'] += ((h.time_in.change(hour: 0)..h.time_out.change(hour: 4)).cover?(Time.at(x)) ? 1 : 0)
+    puts time_in..time_out
+    self.hours.each do |h|
+      puts h.time_in..h.time_out
+      (h.time_in.to_i..h.time_out.to_i).step(1.minute) do |y|
+        x = Time.at(y)+6.hours
+        if(x >= time_in && x <= time_out)
+          my_time_in = h.time_in
+          my_time_out = h.time_out
+          if(ApplicationController.helpers.is_holiday(x)) #Add holidays
+            hours['100'] += 1;
+          else
+            if(h.scheduletype == "Diurno")
+              if ((my_time_in.change(hour: 5, minute: 0)+6.hours .. my_time_out.change(hour: 19)+6.hours).cover?(x))
+                if(hours['normal'] < 480)
+                  hours['normal'] += 1
+                else
+                  hours['25'] += 1
+                end
+              elsif (my_time_in.change(hour: 19, minute: 0)+6.hours .. my_time_out.change(hour: 22)+6.hours).cover?(x)
+                hours['50'] += 1
+              else
+                hours['75'] += 1
+              end
+            elsif(h.scheduletype == "Mixto")
+              if ((my_time_in.change(hour: 14, minute: 0)+6.hours .. my_time_out.change(hour: 21)+6.hours).cover?(x))
+                if(hours['normal'] < 420)
+                  hours['normal'] += 1
+                elsif ((my_time_in.change(hour: 14, minute: 0)+6.hours .. my_time_out.change(hour: 19)+6.hours).cover?(x))
+                  hours['25'] += 1
+                else
+                  hours['50'] += 1
+                end
+              elsif (my_time_in.change(hour: 5, minute: 0)+6.hours .. my_time_out.change(hour: 14)+6.hours).cover?(x)
+                hours['25'] += 1
+              elsif (my_time_in.change(hour: 21, minute: 0)+6.hours .. my_time_out.change(hour: 22)+6.hours).cover?(x)
+                hours['50'] += 1
+              else
+                hours['75'] += 1
+              end
+            else
+              if ((my_time_in.change(hour: 5, minute: 0)+6.hours .. my_time_out.change(hour: 19)+6.hours).cover?(x))
+                hours['25'] += 1
+              elsif ((my_time_in.change(hour: 19, minute: 0)+6.hours .. my_time_out.change(hour: 22)+6.hours).cover?(x))
+                hours['50'] += 1
+              else
+                if(hours['normal'] < 360)
+                  hours['normal'] += 1
+                else
+                  hours['75%'] += 1
+                end
+              end
+            end
+          end
+        end
       end
     end
+
+    #Lazy way to remove trailing 1
+    if(hours['normal'] % 10 == 1)
+      hours['normal']-=1
+    end
+    if(hours['25'] % 10 == 1)
+      hours['25']-=1
+    end
+    if(hours['50'] % 10 == 1)
+      hours['50']-=1
+    end
+    if(hours['75'] % 10 == 1)
+      hours['75']-=1
+    end
+    if(hours['100'] % 10 == 1)
+      hours['100']-=1
+    end
     hours['Extra'] = hours['25'] + hours['50'] + hours['75'] + hours['100']
+
     self.permissions.where(time_in: time_in.in_time_zone('UTC').beginning_of_day..time_out.in_time_zone('UTC').end_of_day).each do |x|
       if x.time_out.present? and x.time_in.present?
         if x.time_out.hour - x.time_in.hour > 8
@@ -100,6 +165,11 @@ class Employee < ActiveRecord::Base
         end
       end
     end
+    puts hours['normal']
+    puts hours['25']
+    puts hours['50']
+    puts hours['75']
+    puts hours['100']
     hours
   end
 

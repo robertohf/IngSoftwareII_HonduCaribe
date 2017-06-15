@@ -335,7 +335,7 @@
                             <% end %>
                             <div id="hours_show">
                               <% employee = @employee %>
-                              <%= render partial: "hours_show", locals: {employee: employee, from: Date.today, to: Date.today.tomorrow} %>
+                              <%= render partial: "hours_show", locals: {employee: employee, from: Date.today, to: Date.today} %>
                             </div>
                           </div>
 
@@ -668,9 +668,8 @@
       </div>
 
       <div class="modal fade" id="editEducation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      
-      </div>    
 
+      </div>
       <div class="modal fade" id="editWorkExp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           
       </div>
