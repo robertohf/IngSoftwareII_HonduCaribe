@@ -84,10 +84,10 @@ class Employee < ActiveRecord::Base
         if(x >= time_in && x <= time_out)
           my_time_in = h.time_in
           my_time_out = h.time_out
-          if(h.scheduletype == "Diurno")
-            if(ApplicationController.helpers.is_holiday(x)) #Add holidays
-              hours['100'] += 1;
-            else
+          if(ApplicationController.helpers.is_holiday(x)) #Add holidays
+            hours['100'] += 1;
+          else
+            if(h.scheduletype == "Diurno")
               if ((my_time_in.change(hour: 5, minute: 0)+6.hours .. my_time_out.change(hour: 19)+6.hours).cover?(x))
                 if(hours['normal'] < 480)
                   hours['normal'] += 1
@@ -99,11 +99,7 @@ class Employee < ActiveRecord::Base
               else
                 hours['75'] += 1
               end
-            end
-          elsif(h.scheduletype == "Mixto")
-            if(ApplicationController.helpers.is_holiday(x))
-              hours['100'] += 1;
-            else
+            elsif(h.scheduletype == "Mixto")
               if ((my_time_in.change(hour: 14, minute: 0)+6.hours .. my_time_out.change(hour: 21)+6.hours).cover?(x))
                 if(hours['normal'] < 420)
                   hours['normal'] += 1
@@ -119,10 +115,6 @@ class Employee < ActiveRecord::Base
               else
                 hours['75'] += 1
               end
-            end
-          else
-            if(ApplicationController.helpers.is_holiday(x))
-              hours['100'] += 1
             else
               if ((my_time_in.change(hour: 5, minute: 0)+6.hours .. my_time_out.change(hour: 19)+6.hours).cover?(x))
                 hours['25'] += 1
@@ -141,7 +133,24 @@ class Employee < ActiveRecord::Base
       end
     end
 
+    #Lazy way to remove trailing 1
+    if(hours['normal'] % 10 == 1)
+      hours['normal']-=1
+    end
+    if(hours['25'] % 10 == 1)
+      hours['25']-=1
+    end
+    if(hours['50'] % 10 == 1)
+      hours['50']-=1
+    end
+    if(hours['75'] % 10 == 1)
+      hours['75']-=1
+    end
+    if(hours['100'] % 10 == 1)
+      hours['100']-=1
+    end
     hours['Extra'] = hours['25'] + hours['50'] + hours['75'] + hours['100']
+
     self.permissions.where(time_in: time_in.in_time_zone('UTC').beginning_of_day..time_out.in_time_zone('UTC').end_of_day).each do |x|
       if x.time_out.present? and x.time_in.present?
         if x.time_out.hour - x.time_in.hour > 8
@@ -163,6 +172,11 @@ class Employee < ActiveRecord::Base
         end
       end
     end
+    puts hours['normal']
+    puts hours['25']
+    puts hours['50']
+    puts hours['75']
+    puts hours['100']
     hours
   end
 
