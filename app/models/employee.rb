@@ -2,15 +2,8 @@ class Employee < ActiveRecord::Base
   validates_uniqueness_of :work_id, :name
   validates_numericality_of :work_id, greater_than: 0
   validates_numericality_of :emergency_contact_number, greater_than: 0
-  has_attached_file :image,
-                    storage: :s3,
-                    s3_permissions: 'public-read-write',
-                    url: 's3-us-west-2.amazonaws.com/honducariberrhh',
-                    path: '/assets/photos/:id/:style/:basename.:extension',
-                    s3_host_name: 's3-us-west-2.amazonaws.com'
-
-  validates_attachment_content_type :image, content_type: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
-
+  mount_uploader :avatar, AvatarUploader
+  
   has_many :educations, dependent: :destroy
   has_many :work_exps, dependent: :destroy
   has_many :dependants, dependent: :destroy

@@ -14,7 +14,34 @@ class PermissionsController < ApplicationController
     else
       render :new
     end
-end
+  end
+
+
+  def edit
+    @employee = Employee.find(params[:employee_id])
+    @permission = @employee.permissions.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def update
+    @employee = Employee.find(params[:employee_id])
+    @permission = @employee.permissions.find(params[:id])
+    if @permission.update(permissions_params)
+      redirect_to @employee, notice: 'Se agrego con exito'
+    else
+      redirect_to @employee
+    end
+  end
+
+  def destroy
+    @employee = Employee.find(params[:employee_id])
+    @permission = @employee.permissions.find(params[:id])
+    @permission.destroy
+    redirect_to @employee,  notice: "Se borro con exito"
+  end
 
   protected
 

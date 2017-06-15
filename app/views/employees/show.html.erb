@@ -46,7 +46,7 @@
                       <div class="profile_img">
                         <div id="crop-avatar">
                           <!-- Current avatar -->
-                          <%= image_tag @employee.image.url, class: "img-responsive avatar-view" %>
+                          <%= image_tag  @employee.avatar_url, class: "img-responsive avatar-view" %>
                         </div>
                       </div>
                       <h3><%=@employee.name%></h3>
@@ -100,7 +100,7 @@
                     </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                       <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs " role="tablist">
                           <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Informacion General</a>
                           </li>
                           <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Informacion Estudio</a>
@@ -163,7 +163,7 @@
                               	</thead>
                               	<tbody>
                               			<%- @employee.educations.each do |f| %>
-                                      <%unless f.school_name.blank? %>
+                                      <%unless f.id.blank? %>
                                         <tr>
                                           <td><%= f.school_name %></td>
                                           <td><%= f.title_description %></td>
@@ -174,11 +174,12 @@
                                           <% else %>
                                             <td>No</td>
                                           <% end %>
-                                          <td><%= link_to "Descargar",  f.document.url %></td>
+                                          <td><%= link_to "Descargar", f.constancia.url %></td>
                                           <td>
                                           <%= link_to edit_employee_education_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editEducation', class: "btn btn-success"}  do %>
                                             <i class="fa fa-edit m-right-xs"></i> Editar
-                                          <% end %>
+                                          <% end %> 
+                                          <%= link_to "Eliminar", employee_education_path(@employee, f), method: :delete, data: {confirm: "Estas Seguro?"}, class: "btn btn-danger" %>
                                           </td>
                                         </tr>
                                       <%end%>
@@ -203,17 +204,26 @@
                               			<th style= "text-align: center">Fecha Inicio</th>
                               			<th style= "text-align: center">Fecha Culminacion</th>
                                     <th style= "text-align: center">Constancia</th>
+                                    <th> </th>
                               		</tr>
                               	</thead>
                               	<tbody>
                               			<%- @employee.work_exps.each do |f| %>
+                                    <%unless f.id.blank? %>
                               				<tr>
                               					<td><%= f.company_name %></td>
                               					<td><%= f.position %></td>
                               					<td><%= nice_date(f.year_start)  %></td>
                                         <td><%= nice_date(f.year_end)  %></td>
-                                        <td><%= link_to "Descargar", f.document.url %></td>
+                                        <td><%= link_to "Descargar", f.constancia.url %></td>
+                                        <td>
+                                          <%= link_to edit_employee_work_exp_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editWorkExp', class: "btn btn-success"}  do %>
+                                            <i class="fa fa-edit m-right-xs"></i> Editar
+                                          <% end %> 
+                                          <%= link_to "Eliminar", employee_work_exp_path(@employee, f), method: :delete, data: {confirm: "Estas Seguro?"}, class: "btn btn-danger" %>
+                                        </td>
                               				</tr>
+                                    <%end%>
                               			<%- end %>
                               	</tbody>
                               </table>
@@ -238,13 +248,21 @@
                               	</thead>
                               	<tbody>
                               			<%- @employee.dependants.each do |f| %>
+                                    <% unless f.id.blank? %>
                               				<tr>
                               					<td><%= f.name %></td>
                               					<td><%= f.relation %></td>
                                         <td><%= f.email %></td>
                                         <td><%= f.phone %></td>
                                         <td><%= nice_date(f.birth_at) %></td>
+                                        <td>
+                                          <%= link_to edit_employee_dependant_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editDependant', class: "btn btn-success"}  do %>
+                                            <i class="fa fa-edit m-right-xs"></i> Editar
+                                          <% end %> 
+                                          <%= link_to "Eliminar", employee_dependant_path(@employee, f), method: :delete, data: {confirm: "Estas Seguro?"}, class: "btn btn-danger" %>
+                                        </td>
                               				</tr>
+                                    <%end%>
                               			<%- end %>
                               	</tbody>
                               </table>
@@ -400,11 +418,19 @@
                               	</thead>
                               	<tbody>
                               			<%- @employee.permissions.each do |f| %>
+                                    <%unless f.id.blank? %>
                               				<tr>
-                              					<td><%= f.time_in %></td>
-                              					<td><%= f.time_out %></td>
+                              					<td><%= nice_date_time(f.time_in) %></td>
+                              					<td><%= nice_date_time(f.time_out) %></td>
                                         <td><%= f.permission_type %></td>
+                                        <td>
+                                          <%= link_to edit_employee_permission_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editPermission', class: "btn btn-success"}  do %>
+                                            <i class="fa fa-edit m-right-xs"></i> Editar
+                                          <% end %> 
+                                          <%= link_to "Eliminar", employee_permission_path(@employee, f), method: :delete, data: {confirm: "Estas Seguro?"}, class: "btn btn-danger" %>
+                                        </td>
                               				</tr>
+                                    <%end%>
                               			<%- end %>
                               	</tbody>
                               </table>
@@ -456,8 +482,8 @@
                   <%= f.check_box :completed %> <br />
                 </div>
                 <div class="form-group">
-                  <%= f.label :document, "Constancia" %>
-                  <%= f.file_field :document %>
+                  <%= f.label :constancia, "Constancia" %>
+                  <%= f.file_field :constancia %>
                 </div>
               </div>
               <div class="modal-footer">
@@ -495,8 +521,8 @@
                   <%= f.date_field :year_end, class: "form-control" %>
                 </div>
                 <div class="form-group">
-                  <%= f.label :document, "Constancia" %>
-                  <%= f.file_field :document %>
+                  <%= f.label :constancia, "Constancia" %>
+                  <%= f.file_field :constancia %>
                 </div>
               </div>
               <div class="modal-footer">
@@ -643,4 +669,19 @@
 
       <div class="modal fade" id="editEducation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
+      </div>
+      <div class="modal fade" id="editWorkExp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          
+      </div>
+
+      <div class="modal fade" id="editDependant" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+         
+      </div>
+
+      <div class="modal fade" id="editHour" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        
+      </div>
+
+      <div class="modal fade" id="editPermission" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        
       </div>

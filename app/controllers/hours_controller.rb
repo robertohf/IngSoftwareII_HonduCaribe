@@ -13,7 +13,26 @@ class HoursController < ApplicationController
     else
       render :new
     end
-end
+  end
+
+  def edit
+    @employee = Employee.find(params[:employee_id])
+    @hour = @employee.hours.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def update
+    @employee = Employee.find(params[:employee_id])
+    @hour = @employee.hours.find(params[:id])
+    if @hour.update(hours_params)
+      redirect_to @employee, notice: 'Se agrego con exito'
+    else
+      redirect_to @employee
+    end
+  end
 
   protected
 
