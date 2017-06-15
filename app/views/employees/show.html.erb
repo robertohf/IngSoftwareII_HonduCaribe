@@ -420,8 +420,8 @@
                               			<%- @employee.permissions.each do |f| %>
                                     <%unless f.id.blank? %>
                               				<tr>
-                              					<td><%= f.time_in %></td>
-                              					<td><%= f.time_out %></td>
+                              					<td><%= nice_date_time(f.time_in) %></td>
+                              					<td><%= nice_date_time(f.time_out) %></td>
                                         <td><%= f.permission_type %></td>
                                         <td>
                                           <%= link_to edit_employee_permission_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editPermission', class: "btn btn-success"}  do %>

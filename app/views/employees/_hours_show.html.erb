@@ -3,6 +3,7 @@
     <tr>
       <th style= "text-align: center">Hora de entrada</th>
       <th style= "text-align: center">Hora de salida</th>
+      <th style= "text-align: center">Tipo de Horario</th>
     </tr>
   </thead>
   <tbody>
@@ -11,6 +12,7 @@
           <tr>
             <td><%= nice_date_time(f.time_in) %></td>
             <td><%= nice_date_time(f.time_out) %></td>
+            <td><%= f.scheduletype %></td>
             <td>
               <%= link_to edit_employee_hour_path(employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editHour', class: "btn btn-success"}  do %>
                 <i class="fa fa-edit m-right-xs"></i> Editar
