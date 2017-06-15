@@ -17,7 +17,11 @@
             <%= WorkStructure.find(f.work_structure_id).department %>
           <%end%>
         </td>
-        <td><%= f.base_belong %></td>
+        <td>
+          <% if(f.work_structure_id && WorkStructure.find(f.work_structure_id)) %>
+            <%= WorkStructure.find(f.work_structure_id).area %>
+          <%end%>
+        </td>
       </tr>
     <%- end %>
   </tbody>
