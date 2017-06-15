@@ -178,7 +178,7 @@
                                           <td>
                                           <%= link_to edit_employee_education_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editEducation', class: "btn btn-success"}  do %>
                                             <i class="fa fa-edit m-right-xs"></i> Editar
-                                          <% end %> 
+                                          <% end %>
                                           </td>
                                         </tr>
                                       <%end%>
@@ -317,7 +317,7 @@
                             <% end %>
                             <div id="hours_show">
                               <% employee = @employee %>
-                              <%= render partial: "hours_show", locals: {employee: employee, from: Date.today, to: Date.today.tomorrow} %>
+                              <%= render partial: "hours_show", locals: {employee: employee, from: Date.today, to: Date.today} %>
                             </div>
                           </div>
 
@@ -642,6 +642,5 @@
       </div>
 
       <div class="modal fade" id="editEducation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      
-      </div>    
 
+      </div>
