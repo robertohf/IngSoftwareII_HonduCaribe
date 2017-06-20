@@ -9,8 +9,8 @@
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
+                    <span class="input-group-btn not-printable">
+                      <button class="btn btn-default not-printable" type="button">Go!</button>
                     </span>
                   </div>
                 </div>
@@ -29,12 +29,6 @@
                       </li>
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
                       </li>
                       <li><a class="close-link"><i class="fa fa-close"></i></a>
                       </li>
@@ -69,7 +63,7 @@
                         <%end%>
                       </ul>
                         <% if(!Instructor.find_by_id(@training.instructor_id)) %>
-                      <%= link_to edit_training_path(@training), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addInstructor', class: "btn btn-success"} do %>
+                      <%= link_to edit_training_path(@training), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addInstructor', class: "btn btn-success not-printable"} do %>
                         <i class="fa fa-edit m-right-xs"></i> Anadir Instructor
                       <% end %>
                       <%end%>
@@ -116,11 +110,11 @@
                                           <% if !@training.asistenciaConfirmada %>
                                             <%= form_for TrainingEmployee.where("training_id = ? AND employee_id = ?", @training.id, f.id).first, url: training_training_employee_path(@training, TrainingEmployee.where("training_id = ? AND employee_id = ?", @training.id, f.id).first.id) do |f| %>
                                               <%= f.hidden_field :asistencia, value: true %>
-                                              <%= f.submit "Confirmar Asistencia", class:"btn btn-success"%>
+                                              <%= f.submit "Confirmar Asistencia", class:"btn btn-success not-printable"%>
                                             <% end %>
                                             <%= form_for TrainingEmployee.where("training_id = ? AND employee_id = ?", @training.id, f.id).first, url: training_training_employee_path(@training, TrainingEmployee.where("training_id = ? AND employee_id = ?", @training.id, f.id).first.id) do |f| %>
                                               <%= f.hidden_field :asistencia, value: false %>
-                                              <%= f.submit "Confirmar Inasistencia", class:"btn btn-danger"%>
+                                              <%= f.submit "Confirmar Inasistencia", class:"btn btn-danger not-printable"%>
                                             <% end %>
                                           <% end %>
                                         </td>
@@ -131,13 +125,13 @@
                               <% else %>
                                 <p><em>No hay Informacion.</em></p>
                               <% end %>
-                                <%= link_to new_training_training_employee_path(@training), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addEmployee', class: "btn btn-success"} do %>
+                                <%= link_to new_training_training_employee_path(@training), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addEmployee', class: "btn btn-success not-printable"} do %>
                                   <i class="fa fa-edit m-right-xs"></i> Invitar Empleado
                                 <% end %>
                                 <% if @training.asistenciaConfirmada %>
-                                  <%= button_to "Editar Hoja de Asistencia", reactivarAsistencia_path(:id => @training.id), method: :post%>
+                                  <%= button_to "Editar Hoja de Asistencia", reactivarAsistencia_path(:id => @training.id), method: :post, :class => 'not-printable'%>
                                 <% else %>
-                                  <%= button_to "Confirmar Hoja de Asistencia", confirmarAsistencia_path(:id => @training.id), method: :post%>
+                                  <%= button_to "Confirmar Hoja de Asistencia", confirmarAsistencia_path(:id => @training.id), method: :post, :class => 'not-printable'%>
                                 <% end %>
                           </div>
 
@@ -157,11 +151,11 @@
                           <% else %>
                             <p><em>No hay Informacion.</em></p>
                           <% end %>
-                          <%= link_to new_training_ability_path(@training), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addAbility', class: "btn btn-success"} do %>
-                            <i class="fa fa-edit m-right-xs"></i> Anadir Habilidad
+                          <%= link_to new_training_ability_path(@training), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addAbility', class: "btn btn-success not-printable"} do %>
+                            <i class="fa fa-edit m-right-xs not-printable"></i> Anadir Habilidad
                           <% end %>
 
-                          <%= button_to "Remover habilidades de empleados", removerHabilidades_path(:id => @training.id), method: :post%>
+                          <%= button_to "Remover habilidades de empleados", removerHabilidades_path(:id => @training.id), method: :post, :class => 'not-printable'%>
 
 
 

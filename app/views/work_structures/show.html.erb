@@ -5,8 +5,8 @@
         <h3>HonduCaribe</h3>
       </div>
 
-      <div class="title_right">
-        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+      <div class="title_right not-printable">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search not-printable">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Buscar...">
                     <span class="input-group-btn">
@@ -68,10 +68,10 @@
                     <% else %>
                       <p><em>No hay Informacion.</em></p>
                     <% end %>
-                    <%= link_to new_work_structure_ability_path(@work_structure), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addAbility', class: "btn btn-success"} do %>
+                    <%= link_to new_work_structure_ability_path(@work_structure), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addAbility', class: "btn btn-success not-printable"} do %>
                       <i class="fa fa-edit m-right-xs"></i> Anadir Habilidad
                     <% end %>
-                    <%= link_to "Borrar", @work_structure, method: :delete, data: {confirm: "Estas Seguro?", class: "btn btn-danger"}  %>
+                    <%= link_to "Borrar", @work_structure, method: :delete, data: {confirm: "Estas Seguro?", class: "btn btn-danger not-printable"}  %>
 
           </div>
         </div>

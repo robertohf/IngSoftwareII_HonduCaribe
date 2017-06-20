@@ -27,15 +27,6 @@
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
                       <li><a class="close-link"><i class="fa fa-close"></i></a>
                       </li>
                     </ul>
@@ -78,15 +69,15 @@
                         </li>
                       </ul>
 
-                      <%= link_to edit_employee_path(@employee), class: "btn btn-success" do %>
+                      <%= link_to edit_employee_path(@employee), class: "btn btn-success not-printable" do %>
                         <i class="fa fa-edit m-right-xs"></i> Editar Empleado
                       <% end %>
                       <% if @employee.employee_status %>
-                        <%= link_to suprimir_path(:id => @employee.id), class: "btn btn-danger" do %>
+                        <%= link_to suprimir_path(:id => @employee.id), class: "btn btn-danger not-printable" do %>
                           <i class="fa fa-times m-right-xs"></i> Suprimir Empleado
                         <% end %>
                       <% else %>
-                        <%= link_to reactivar_path(:id => @employee.id), class: "btn btn-danger" do %>
+                        <%= link_to reactivar_path(:id => @employee.id), class: "btn btn-danger not-printable" do %>
                           <i class="fa fa-times m-right-xs"></i> Reactivar Empleado
                         <% end %>
                       <% end %>
@@ -100,7 +91,7 @@
                     </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                       <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                        <ul id="myTab" class="nav nav-tabs bar_tabs " role="tablist">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs not-printable" role="tablist">
                           <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Informacion General</a>
                           </li>
                           <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Informacion Estudio</a>
@@ -176,10 +167,10 @@
                                           <% end %>
                                           <td><%= link_to "Descargar", f.constancia.url %></td>
                                           <td>
-                                          <%= link_to edit_employee_education_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editEducation', class: "btn btn-success"}  do %>
+                                          <%= link_to edit_employee_education_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editEducation', class: "not-printable btn btn-success"}  do %>
                                             <i class="fa fa-edit m-right-xs"></i> Editar
-                                          <% end %> 
-                                          <%= link_to "Eliminar", employee_education_path(@employee, f), method: :delete, data: {confirm: "Estas Seguro?"}, class: "btn btn-danger" %>
+                                          <% end %>
+                                          <%= link_to "Eliminar", employee_education_path(@employee, f), method: :delete, data: {confirm: "Estas Seguro?"}, class: "not-printable btn btn-danger" %>
                                           </td>
                                         </tr>
                                       <%end%>
@@ -189,7 +180,7 @@
                               <% else %>
                                 <p><em>No hay Informacion.</em></p>
                               <% end %>
-                              <%= link_to new_employee_education_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addEducation', class: "btn btn-success"} do %>
+                              <%= link_to new_employee_education_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addEducation', class: "not-printable btn btn-success"} do %>
                                 <i class="fa fa-edit m-right-xs"></i> Anadir Estudio
                               <% end %>
 
@@ -217,10 +208,10 @@
                                         <td><%= nice_date(f.year_end)  %></td>
                                         <td><%= link_to "Descargar", f.constancia.url %></td>
                                         <td>
-                                          <%= link_to edit_employee_work_exp_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editWorkExp', class: "btn btn-success"}  do %>
-                                            <i class="fa fa-edit m-right-xs"></i> Editar
-                                          <% end %> 
-                                          <%= link_to "Eliminar", employee_work_exp_path(@employee, f), method: :delete, data: {confirm: "Estas Seguro?"}, class: "btn btn-danger" %>
+                                          <%= link_to edit_employee_work_exp_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editWorkExp', class: "btn btn-success not-printable"}  do %>
+                                            <i class="fa fa-edit not-printable m-right-xs"></i> Editar
+                                          <% end %>
+                                          <%= link_to "Eliminar", employee_work_exp_path(@employee, f), method: :delete, data: {confirm: "Estas Seguro?"}, class: "btn btn-danger not-printable" %>
                                         </td>
                               				</tr>
                                     <%end%>
@@ -230,7 +221,7 @@
                               <% else %>
                                 <p><em>No hay Informacion.</em></p>
                               <% end %>
-                              <%= link_to new_employee_work_exp_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addWorkExp', class: "btn btn-success"} do %>
+                              <%= link_to new_employee_work_exp_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addWorkExp', class: "btn btn-success not-printable"} do %>
                                 <i class="fa fa-edit m-right-xs"></i> Anadir Experiencia Laboral
                               <% end %>
                           </div>
@@ -256,10 +247,10 @@
                                         <td><%= f.phone %></td>
                                         <td><%= nice_date(f.birth_at) %></td>
                                         <td>
-                                          <%= link_to edit_employee_dependant_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editDependant', class: "btn btn-success"}  do %>
+                                          <%= link_to edit_employee_dependant_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editDependant', class: "btn btn-success not-printable"}  do %>
                                             <i class="fa fa-edit m-right-xs"></i> Editar
-                                          <% end %> 
-                                          <%= link_to "Eliminar", employee_dependant_path(@employee, f), method: :delete, data: {confirm: "Estas Seguro?"}, class: "btn btn-danger" %>
+                                          <% end %>
+                                          <%= link_to "Eliminar", employee_dependant_path(@employee, f), method: :delete, data: {confirm: "Estas Seguro?"}, class: "btn btn-danger not-printable" %>
                                         </td>
                               				</tr>
                                     <%end%>
@@ -269,7 +260,7 @@
                               <% else %>
                                 <p><em>No hay Informacion.</em></p>
                               <% end %>
-                              <%= link_to new_employee_dependant_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addDependant', class: "btn btn-success"} do %>
+                              <%= link_to new_employee_dependant_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addDependant', class: "btn btn-success not-printable"} do %>
                                 <i class="fa fa-edit m-right-xs"></i> Anadir Dependiente
                               <% end %>
                           </div>
@@ -303,11 +294,11 @@
                                         <% if !f.asistenciaConfirmada %>
                                           <%= form_for TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first, url: training_training_employee_path(f.id, TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first.id) do |f| %>
                                             <%= f.hidden_field :asistencia, value: true %>
-                                            <%= f.submit "Confirmar Asistencia", class:"btn btn-success"%>
+                                            <%= f.submit "Confirmar Asistencia", class:"btn btn-success not-printable"%>
                                           <% end %>
                                           <%= form_for TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first, url: training_training_employee_path(f.id, TrainingEmployee.where("training_id = ? AND employee_id = ?", f.id, @employee.id).first.id) do |f| %>
                                             <%= f.hidden_field :asistencia, value: false %>
-                                            <%= f.submit "Confirmar Inasistencia", class:"btn btn-danger"%>
+                                            <%= f.submit "Confirmar Inasistencia", class:"btn btn-danger not-printable"%>
                                           <% end %>
                                         <% else %>
                                         <em>Asistencia ya ha sido confirmada</em>
@@ -347,7 +338,8 @@
                               <table class="data table table-striped no-margin" style="text-align: center; ">
                                 <thead>
                                   <tr>
-                                    <th style= "text-align: center"> Rerfil Academico </th>
+                                    <th style= "text-align: center"> Perfil Academico </th>
+                                    <th style= "text-align: center"> Capacitacion </th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -387,13 +379,13 @@
                                       </tr>
                                     <%- end %>
                                 <% else %>
-                                <p><em>No hay Requerimientos de puesto</em></p>
+                                <p style= "text-align: center"><em>No hay Requerimientos de puesto</em></p>
                                 <% end %>
                                 </tbody>
                             </table>
                             </div>
 
-                            <%= link_to new_employee_ability_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addAbility', class: "btn btn-success"} do %>
+                            <%= link_to new_employee_ability_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addAbility', class: "btn btn-success not-printable"} do %>
                                <i class="fa fa-edit m-right-xs"></i> Anadir Requerimiento a Usuario
                              <% end %>
 
@@ -424,10 +416,10 @@
                               					<td><%= nice_date_time(f.time_out) %></td>
                                         <td><%= f.permission_type %></td>
                                         <td>
-                                          <%= link_to edit_employee_permission_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editPermission', class: "btn btn-success"}  do %>
-                                            <i class="fa fa-edit m-right-xs"></i> Editar
-                                          <% end %> 
-                                          <%= link_to "Eliminar", employee_permission_path(@employee, f), method: :delete, data: {confirm: "Estas Seguro?"}, class: "btn btn-danger" %>
+                                          <%= link_to edit_employee_permission_path(@employee, f.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#editPermission', class: "btn btn-success not-printable"}  do %>
+                                            <i class="fa fa-edit m-right-xs not-printable"></i> Editar
+                                          <% end %>
+                                          <%= link_to "Eliminar", employee_permission_path(@employee, f), method: :delete, data: {confirm: "Estas Seguro?"}, class: "btn btn-danger not-printable" %>
                                         </td>
                               				</tr>
                                     <%end%>
@@ -437,7 +429,7 @@
                               <% else %>
                                 <p><em>No hay Informacion.</em></p>
                               <% end %>
-                              <%= link_to new_employee_permission_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addPermission', class: "btn btn-success"} do %>
+                              <%= link_to new_employee_permission_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addPermission', class: "btn btn-success not-printable"} do %>
                                 <i class="fa fa-edit m-right-xs"></i> Anadir Permiso
                               <% end %>
                           </div>
@@ -671,17 +663,17 @@
 
       </div>
       <div class="modal fade" id="editWorkExp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          
+
       </div>
 
       <div class="modal fade" id="editDependant" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-         
+
       </div>
 
       <div class="modal fade" id="editHour" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        
+
       </div>
 
       <div class="modal fade" id="editPermission" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        
+
       </div>

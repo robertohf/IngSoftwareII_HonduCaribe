@@ -1,15 +1,15 @@
 
 <div class="right_col" role="main">
   <div class="">
-    <div class="page-title">
+    <div class="page-title not-printable">
       <div class="title_left">
         <h3>HonduCaribe</h3>
       </div>
 
-      <div class="title_right">
-        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-            <%= form_tag employees_path, remote: true, method: :get, class: "js-employees-filter form-inline" do %>
-              <%=text_field_tag :q, params[:q], placeholder: "Buscar...", class: "form-control", display: "inline-block" %>
+      <div class="title_right not-printable">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search not-printable">
+            <%= form_tag employees_path, remote: true, method: :get, class: "js-employees-filter form-inline not-printable" do %>
+              <%=text_field_tag :q, params[:q], placeholder: "Buscar...", class: "form-control not-printable", display: "inline-block" %>
                 <%= button_tag type: "submit", class: "btn btn-default", display: "inline-block" do %>
                   <span class="input-group-btn"> Ir! </span>
                 <%end%>
@@ -32,7 +32,10 @@
               <%= render partial: "table", locals: { employees: @employees} %>
             </div>
           </div>
-          <%= link_to "Cancelar", employees_path%>
+          <div class="not-printable">
+            <%= link_to "Cancelar", employees_path%>
+
+          </div>
         </div>
       </div>
     </div>

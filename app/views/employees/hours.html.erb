@@ -8,8 +8,8 @@
       <div class="title_right">
         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
             <%= form_tag employees_path, remote: true, method: :get, class: "js-employees-filter form-inline" do %>
-              <%= text_field_tag :q, params[:q], placeholder: "Buscar...", class: "form-control", display: "inline-block" %>
-                <%= button_tag type: "submit", class: "btn btn-default", display: "inline-block" do %>
+              <%= text_field_tag :q, params[:q], placeholder: "Buscar...", class: "form-control not-printable", display: "inline-block" %>
+                <%= button_tag type: "submit", class: "btn btn-default not-printable", display: "inline-block" do %>
                   <span class="input-group-btn"> Ir! </span>
                 <%end%>
       	   <% end %>
