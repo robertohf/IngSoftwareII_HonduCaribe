@@ -33,3 +33,26 @@
 .navtab{
     width: 100%;
 }
+
+@media print {
+
+  html, body {
+    height: auto;
+  }
+
+  table {
+    font-size: 11px;
+  }
+
+  .not-printable {
+    display: none;
+  }
+
+  .pre-scrollable {
+    overflow-y: visible !important;
+  }
+
+  .page-break-before {
+    page-break-before: always;
+  }
+}

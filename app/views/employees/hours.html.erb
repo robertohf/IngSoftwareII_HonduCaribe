@@ -25,7 +25,7 @@
             <h2>Listado de Empleados</h2>
             <div class="clearfix"></div>
           </div>
-          <%= form_for(:report, remote: true, html: {id:"date_form", class:"row"}) do |f| %>
+          <%= form_for(:report, remote: true, html: {id:"date_form", class:"row not-printable"}) do |f| %>
             <div class="col-xs-6">
               <%= f.label :from, "Desde: ", class:"col-xs-2" %>
               <%= f.date_field :from, class: "form-control", value: Date.today, class:"col-xs-10", onchange: "$('#date_form').submit();" %>
