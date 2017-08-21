@@ -9,7 +9,8 @@ development:
   encoding: latin1
   database: honducaribe_development
   pool: 5
-  username:
+  host: localhost
+  username: rrhh
   password: jonthan
 
 
@@ -18,7 +19,7 @@ production:
   encoding: latin1
   database: honducaribe_production
   pool: 5
-  username:
+  username: 
   password: jonthan
   timeout: 5000
 
@@ -28,8 +29,9 @@ production:
 test:
   adapter: postgresql
   encoding: latin1
-  database: honducaribe_test
+  database: honducaribe_development
   pool: 5
-  username:
+  host: localhost
+  username: rrhh
   password: jonthan
   timeout: 5000
