@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -46,26 +45,23 @@ ActiveRecord::Schema.define(version: 20170611235907) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.index ["employee_id"], name: "index_educations_on_employee_id", using: :btree
   end
-
-  add_index "educations", ["employee_id"], name: "index_educations_on_employee_id", using: :btree
 
   create_table "employee_abilities", force: :cascade do |t|
     t.integer "employee_id"
     t.integer "ability_id"
     t.integer "training_id"
+    t.index ["ability_id"], name: "index_employee_abilities_on_ability_id", using: :btree
+    t.index ["employee_id"], name: "index_employee_abilities_on_employee_id", using: :btree
   end
-
-  add_index "employee_abilities", ["ability_id"], name: "index_employee_abilities_on_ability_id", using: :btree
-  add_index "employee_abilities", ["employee_id"], name: "index_employee_abilities_on_employee_id", using: :btree
 
   create_table "employee_trainings", force: :cascade do |t|
     t.integer "employee_id"
     t.integer "training_id"
+    t.index ["employee_id"], name: "index_employee_trainings_on_employee_id", using: :btree
+    t.index ["training_id"], name: "index_employee_trainings_on_training_id", using: :btree
   end
-
-  add_index "employee_trainings", ["employee_id"], name: "index_employee_trainings_on_employee_id", using: :btree
-  add_index "employee_trainings", ["training_id"], name: "index_employee_trainings_on_training_id", using: :btree
 
   create_table "employees", force: :cascade do |t|
     t.string   "name"
@@ -105,9 +101,8 @@ ActiveRecord::Schema.define(version: 20170611235907) do
     t.datetime "image_updated_at"
     t.integer  "monthly_permissions"
     t.integer  "annual_permissions"
+    t.index ["position_id"], name: "index_employees_on_position_id", using: :btree
   end
-
-  add_index "employees", ["position_id"], name: "index_employees_on_position_id", using: :btree
 
   create_table "horas", force: :cascade do |t|
     t.integer  "employee_id"
@@ -143,9 +138,8 @@ ActiveRecord::Schema.define(version: 20170611235907) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.integer  "institution_id"
+    t.index ["institution_id"], name: "index_instructors_on_institution_id", using: :btree
   end
-
-  add_index "instructors", ["institution_id"], name: "index_instructors_on_institution_id", using: :btree
 
   create_table "permissions", force: :cascade do |t|
     t.integer  "employee_id"
@@ -158,35 +152,31 @@ ActiveRecord::Schema.define(version: 20170611235907) do
   create_table "position_abilities", force: :cascade do |t|
     t.integer "position_id"
     t.integer "ability_id"
+    t.index ["ability_id"], name: "index_position_abilities_on_ability_id", using: :btree
+    t.index ["position_id"], name: "index_position_abilities_on_position_id", using: :btree
   end
-
-  add_index "position_abilities", ["ability_id"], name: "index_position_abilities_on_ability_id", using: :btree
-  add_index "position_abilities", ["position_id"], name: "index_position_abilities_on_position_id", using: :btree
 
   create_table "position_trainings", force: :cascade do |t|
     t.integer "position_id"
     t.integer "training_id"
+    t.index ["position_id"], name: "index_position_trainings_on_position_id", using: :btree
+    t.index ["training_id"], name: "index_position_trainings_on_training_id", using: :btree
   end
-
-  add_index "position_trainings", ["position_id"], name: "index_position_trainings_on_position_id", using: :btree
-  add_index "position_trainings", ["training_id"], name: "index_position_trainings_on_training_id", using: :btree
 
   create_table "positions", force: :cascade do |t|
     t.text     "name_position"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "work_structure_id"
+    t.index ["work_structure_id"], name: "index_positions_on_work_structure_id", using: :btree
   end
-
-  add_index "positions", ["work_structure_id"], name: "index_positions_on_work_structure_id", using: :btree
 
   create_table "training_abilities", force: :cascade do |t|
     t.integer "ability_id"
     t.integer "training_id"
+    t.index ["ability_id"], name: "index_training_abilities_on_ability_id", using: :btree
+    t.index ["training_id"], name: "index_training_abilities_on_training_id", using: :btree
   end
-
-  add_index "training_abilities", ["ability_id"], name: "index_training_abilities_on_ability_id", using: :btree
-  add_index "training_abilities", ["training_id"], name: "index_training_abilities_on_training_id", using: :btree
 
   create_table "training_employees", force: :cascade do |t|
     t.integer  "employee_id"
@@ -234,9 +224,8 @@ ActiveRecord::Schema.define(version: 20170611235907) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.index ["employee_id"], name: "index_work_exps_on_employee_id", using: :btree
   end
-
-  add_index "work_exps", ["employee_id"], name: "index_work_exps_on_employee_id", using: :btree
 
   create_table "work_structure_abilities", force: :cascade do |t|
     t.integer  "ability_id"

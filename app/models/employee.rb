@@ -30,7 +30,7 @@ class Employee < ActiveRecord::Base
   end
 
   def self.parentesco
-    %w[Hijo Conyuge Hermano]
+    %w[Hijo Conyuge Hermano Padre Madre]
   end
 
   def self.habilidades
