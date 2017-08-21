@@ -8,7 +8,7 @@ class Training < ActiveRecord::Base
   belongs_to :institution
 
   def self.categories
-    %w[Capacitacion Charla Seminario Taller]
+    %w[Capacitacion Charla Seminario Taller Socializacion]
   end
 
   def self.AddAbility(trainingId)
