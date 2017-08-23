@@ -18,6 +18,8 @@
                 <i class="fa fa-edit m-right-xs"></i> Editar
               <% end %>
             </td>
+            <td>
+              <%= link_to "Delete", employee_hour_path(employee, f.id), data: {confirm: "Estas Seguro?"} , :method => :delete, class: "btn btn-danger" %></td>
           </tr>
         <% end %>
       <%- end %>

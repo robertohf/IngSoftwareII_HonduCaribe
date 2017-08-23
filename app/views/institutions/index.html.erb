@@ -40,9 +40,9 @@
                     <td><%= link_to f.name, institution_path(f.id) %></td>
                     <td><%= f.description %></td>
                     <th>
+                      <%= link_to "Editar",  edit_institution_path(f) , class: "btn btn-success not-printabl" %>
                       <%= link_to "Eliminar", f, method: :delete, data: {confirm: "Estas Seguro?"}, class: "btn btn-danger" %>
                     </th>
-
                   </tr>
                 <%- end %>
               </tbody>

@@ -94,7 +94,6 @@ ActiveRecord::Schema.define(version: 20170611235907) do
     t.string   "avatar"
     t.integer  "work_structure_id"
     t.integer  "ability_id"
-    t.boolean  "hasChildren"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -113,11 +112,8 @@ ActiveRecord::Schema.define(version: 20170611235907) do
 
   create_table "hours", force: :cascade do |t|
     t.integer  "employee_id"
-    t.datetime "date"
     t.datetime "time_in"
     t.datetime "time_out"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
     t.string   "scheduletype"
   end
 
@@ -251,7 +247,6 @@ ActiveRecord::Schema.define(version: 20170611235907) do
   add_foreign_key "employee_trainings", "employees"
   add_foreign_key "employee_trainings", "trainings"
   add_foreign_key "employees", "positions"
-  add_foreign_key "hours", "employees"
   add_foreign_key "instructors", "institutions"
   add_foreign_key "position_abilities", "abilities"
   add_foreign_key "position_abilities", "positions"
