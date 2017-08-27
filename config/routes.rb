@@ -21,7 +21,9 @@ Rails.application.routes.draw do
     resources :employee_abilities
     resources :trainings
     resources :training_employees
-    resources :hours
+    resources :hours do
+      get 'hours/:id/destroy' => 'hours#destroy'
+    end
     resources :permissions
     post 'hours_graph'
   end

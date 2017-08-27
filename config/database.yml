@@ -6,10 +6,11 @@
 #
 development:
   adapter: postgresql
-  encoding: latin1
+  encoding: UTF-8
   database: honducaribe_development
   pool: 5
-  username:
+  host: localhost
+  username: rrhh
   password: jonthan
 
 
@@ -27,9 +28,10 @@ production:
 # Do not set this db to the same as development or production.
 test:
   adapter: postgresql
-  encoding: latin1
+  encoding: UTF-8
   database: honducaribe_test
   pool: 5
-  username:
+  host: localhost
+  username: rrhh
   password: jonthan
   timeout: 5000

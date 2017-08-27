@@ -18,6 +18,20 @@ class InstitutionsController < ApplicationController
     end
   end
 
+  def edit
+    @institution = Institution.find(params[:id])
+  end
+
+  def update
+    @institution = Institution.find(params[:id])
+
+    if @institution.update(institution_params)
+      redirect_to @institution
+    else
+      render 'edit'
+    end
+  end
+
   def show
     @institution = Institution.find_by_id(params[:id])
     @instructor = @institution.instructors.build
@@ -28,8 +42,7 @@ class InstitutionsController < ApplicationController
     @institution.DeleteReferences
     @institution.destroy
     redirect_to institutions_path, notice: 'Se borro con exito companero'
-
-   end
+  end
 
   protected
 

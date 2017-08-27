@@ -34,6 +34,13 @@ class HoursController < ApplicationController
     end
   end
 
+  def destroy
+    @employee = Employee.find(params[:employee_id])
+      @hour = @employee.hours.find(params[:id])
+    @hour.destroy
+    redirect_to hours_path, notice: 'Se borro con exito companero'
+  end
+
   protected
 
   def hours_params
