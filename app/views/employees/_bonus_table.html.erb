@@ -1,0 +1,34 @@
+<table class="table table-hover">
+  <thead style="font-size: 18px; font-family: Fjalla One, sans-serif; color: #00263D">
+    <tr>
+      <th>Codigo de Empleado</th>
+      <th>Nombre</th>
+      <th>Puesto</th>
+      <th>Area</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%- employees.each do |f| %>
+      <%- if f.dependants.any? %>
+        <%- f.dependants.each do |d| %>
+          <%- if d.studying %>
+            <tr>
+              <td><%= f.work_id%></td>
+              <td><%= link_to f.name, employee_path(f) %></td>
+              <td>
+                <% if(f.work_structure_id && WorkStructure.find(f.work_structure_id)) %>
+                  <%= WorkStructure.find(f.work_structure_id).department %>
+                <%end%>
+              </td>
+              <td>
+                <% if(f.work_structure_id && WorkStructure.find(f.work_structure_id)) %>
+                  <%= WorkStructure.find(f.work_structure_id).area %>
+                <%end%>
+              </td>
+            </tr>
+          <%- end %>
+        <%- end %>
+      <%- end %>
+    <%- end %>
+  </tbody>
+</table>
