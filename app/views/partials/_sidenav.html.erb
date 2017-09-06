@@ -7,30 +7,11 @@
         <a class="site_title"><%= image_tag "gota.png", style: "width: 48px"%> HonduCaribe </a>
       </div>
       <div class="clearfix"></div>
-
-      <% if current_user %>
-      <!-- menu profile quick info -->
-      <div class="profile">
-        <div class="profile_pic">
-          <%= image_tag "img.jpg", :class => "img-circle profile_img"  %>
-        </div>
-        <div class="profile_info">
-          <span>Bienvenido,</span>
-          <h2>Mr. Jose</h2>
-        </div>
-      </div>
-
-      <!-- /menu profile quick info -->
-
-      <br />
-      <% end %>
       <!-- sidebar menu -->
+
       <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
         <div class="menu_section">
-          <% if current_user %>
-            <h3>General Jose's Managers</h3>
-          <% end %>
-
+        </br>
           <ul class="nav side-menu">
             <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
               <ul class="nav child_menu" style="display: none">
@@ -90,7 +71,16 @@
             <% end %>
           </ul>
         </div>
-
+        <div class="menu_section">
+          <h3>Configuraciones</h3>
+          <ul class="nav side-menu">
+            <li><a><i class="fa fa-users"></i> Configuracion <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu" style="display: none">
+                  <li><%= link_to "Pantalla de configuracion", new_config_screen_path%></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
       <!-- /sidebar menu -->
     </div>

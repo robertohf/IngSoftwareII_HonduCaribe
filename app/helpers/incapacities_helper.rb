@@ -1,0 +1,2 @@
+module IncapacitiesHelper
+end

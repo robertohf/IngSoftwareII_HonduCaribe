@@ -14,6 +14,7 @@ class Employee < ActiveRecord::Base
   has_many :trainings, through: :training_employees
   has_many :hours, dependent: :destroy
   has_many :permissions, dependent: :destroy
+  has_many :incapacities, dependent: :destroy
 
   validates_presence_of :name
 

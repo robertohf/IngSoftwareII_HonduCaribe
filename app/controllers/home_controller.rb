@@ -1,3 +1,5 @@
 class HomeController < ApplicationController
-  def index; end
+  def index
+  	@config_screens = ConfigScreen.all
+  end
 end
