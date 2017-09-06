@@ -43,22 +43,6 @@ class Employee < ActiveRecord::Base
     now.year - dob.year - (now.month > dob.month || (now.month == dob.month && now.day >= dob.day) ? 0 : 1)
   end
 
-  def self.TieneHijosMenores
-    employees = Employee.all
-    employees.each do |e|
-      if e.dependants.any?
-        e.dependants.each do |d|
-          if !d.birth_at.nil?
-            e.hasChildren = true if age(d.birth_at) < 18
-          else
-            e.hasChildren = false
-          end
-        end
-      end
-      e.save!
-    end
-  end
-
   def get_hours(time_in, time_out)
     hours = {}
     hours['normal'] = 0

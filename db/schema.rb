@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20170906054332) do
 
   # These are extensions that must be enabled in order to support this database
@@ -41,6 +42,7 @@ ActiveRecord::Schema.define(version: 20170906054332) do
     t.string   "email"
     t.string   "phone"
     t.date     "birth_at"
+    t.boolean  "studying"
   end
 
   create_table "educations", force: :cascade do |t|

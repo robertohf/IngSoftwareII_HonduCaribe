@@ -234,6 +234,7 @@
                               		<tr>
                               			<th style= "text-align: center">Nombre</th>
                                     <th style= "text-align: center">Parentesco</th>
+                                    <th style= "text-align: center">Estudiando</th>
                                     <th style= "text-align: center">Correo</th>
                                     <th style= "text-align: center">Telefono</th>
                                     <th style= "text-align: center">Fecha de Nacimiento</th>
@@ -245,6 +246,7 @@
                               				<tr>
                               					<td><%= f.name %></td>
                               					<td><%= f.relation %></td>
+                                        <td><%= f.studying %></td>
                                         <td><%= f.email %></td>
                                         <td><%= f.phone %></td>
                                         <td><%= nice_date(f.birth_at) %></td>
@@ -645,6 +647,10 @@
                <div class="form-group">
                  <%= f.label :birth_at, "Fecha de Nacimiento" %>
                  <%= f.date_field :birth_at, class: "form-control", placeholder: "Fecha de Nacimiento" %>
+               </div>
+               <div class="form-group">
+                 <%= f.label :studying, "Estudiando" %>
+                 <%= f.check_box :studying, :as => :boolean, :label => false, :inline_label => true%>
                </div>
              </div>
              <div class="modal-footer">

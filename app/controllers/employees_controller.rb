@@ -90,8 +90,13 @@ class EmployeesController < ApplicationController
   end
 
   def bonoEducativo
-    Employee.TieneHijosMenores
-    @employees = Employee.where(hasChildren: true)
+    @employees = Employee.where('employee_status = true')
+    query = params[:q]
+    @employees = @employees.where("name LIKE '%#{query}%'") if query
+
+    if request.xhr?
+      render partial: 'bonus_table', locals: { employees: @employees }, status: 200
+    end
   end
 
   def reactivar
