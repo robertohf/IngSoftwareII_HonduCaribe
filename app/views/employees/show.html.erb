@@ -24,7 +24,7 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Perfil de Empleado #<%=@employee.work_id%></h2>
-                    <ul class="nav navbar-right panel_toolbox">
+                      <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
                       <li><a class="close-link"><i class="fa fa-close"></i></a>
@@ -89,24 +89,26 @@
                       <!-- end of skills -->
 
                     </div>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                      <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                        <ul id="myTab" class="nav nav-tabs bar_tabs not-printable" role="tablist">
-                          <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Informacion General</a>
+                     <div class="col-md-9 col-sm-9 col-xs-12">
+                      <div class="" role="tabpanel" data-example-id="togglable-tabs" >
+                        <ul id="myTab" class="nav nav-tabs nav-justified" role="tablist" style="overflow-x: scroll;">
+                          <li role="presentation" class=""><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true"></br>Informacion General</a>
                           </li>
-                          <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Informacion Estudio</a>
+                          <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false"></br>Informacion Estudio</a>
                           </li>
                           <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Lugares de Trabajo Anteriores</a>
                           </li>
-                          <li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Dependientes</a>
+                          <li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false"></br></br>Dependientes</a>
                           </li>
-                          <li role="presentation" class=""><a href="#tab_content5" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Capacitaciones</a>
+                          <li role="presentation" class=""><a href="#tab_content5" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false"></br></br>Capacitaciones</a>
                           </li>
-                          <li role="presentation" class=""><a href="#tab_content6" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Horas</a>
+                          <li role="presentation" class=""><a href="#tab_content6" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false"></br></br>Horas</a>
                           </li>
-                          <li role="presentation" class=""><a href="#tab_content7" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Perfil Comparativo</a>
+                          <li role="presentation" class=""><a href="#tab_content7" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false"></br>Perfil Comparativo</a>
                           </li>
-                          <li role="presentation" class=""><a href="#tab_content8" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Permisos</a>
+                          <li role="presentation" class=""><a href="#tab_content8" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false"></br></br>Permisos</a>
+                          </li>
+                          <li role="presentation" class=""><a href="#tab_content9" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false"></br></br>Incapacitacion</a>
                           </li>
                         </ul>
                         <div id="myTabContent" class="tab-content">
@@ -433,6 +435,36 @@
                                 <i class="fa fa-edit m-right-xs"></i> Anadir Permiso
                               <% end %>
                           </div>
+                          <div role="tabpanel" class="tab-pane fade" id="tab_content9" aria-labelledby="profile-tab" style="text-align: center">
+                            <% if @employee.incapacities.any? %>
+                              <table class="data table table-striped no-margin" style="text-align: center; width: 100%">
+                                <thead>
+                                  <tr>
+                                    <th style= "text-align: center">Nombre</th>
+                                    <th style= "text-align: center">Condicion</th>
+                                    <th style= "text-align: center">Fecha De Baja</th>
+                                    <th> </th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <%- @employee.incapacities.each do |f| %>
+                                    <%unless f.id.blank? %>
+                                      <tr>
+                                        <td><%= f.name %></td>
+                                        <td><%= f.condition %></td>
+                                        <td><%= nice_date(f.down_date)%></td>
+                                      </tr>
+                                    <%end%>
+                                    <%- end %>
+                                </tbody>
+                              </table>
+                              <% else %>
+                                <p><em>No hay Informacion.</em></p>
+                              <% end %>
+                              <%= link_to new_employee_incapacity_path(@employee), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addIncapacity', class: "btn btn-success not-printable"} do %>
+                                <i class="fa fa-edit m-right-xs"></i> Anadir Incapacitacion Laboral
+                              <% end %>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -648,6 +680,44 @@
               <div class="form-group">
                 <%= f.label :description, "Descripcion" %>
                 <%= f.text_area :description, class: "form-control"%>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <%= f.submit "Crear" , class: "btn btn-primary"%>
+            </div>
+            <%- end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="addIncapacity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <h4 class="modal-title" id="myModalLabel">Agregar Incapacidad</h4>
+            </div>
+            <%= form_for [@employee, @incapacity] do |f| %>
+            <div class="modal-body">
+              <div class="form-group">
+                <%= f.label :down_date, "Fecha De Baja" %>
+                <%= datetime_local_field(:incapacity, :down_date) %>
+              </div>
+              <div class="form-group">
+                <%= f.label :doctor, "Doctor" %>
+                <%= f.text_field :doctor, class: "form-control"%>
+              </div>
+              <div class="form-group">
+                <%= f.label :insurance, "Aseguradora" %>
+                <%= f.text_field :insurance, class: "form-control"%>
+              </div>
+              <div class="form-group">
+                <%= f.label :condition, "Condicion Medica" %>
+                <%= f.text_area :condition, class: "form-control"%>
+              </div>
+              <div class="form-group">
+                <%= f.hidden_field :name, :value => @employee.name%>
               </div>
             </div>
             <div class="modal-footer">

@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :employee_abilities
     resources :trainings
     resources :training_employees
+    resources :incapacities
     resources :hours do
       get 'hours/:id/destroy' => 'hours#destroy'
     end
@@ -42,6 +43,9 @@ Rails.application.routes.draw do
     resources :training_abilities
 
   end
+
+
+  resources :config_screens, except: [:show, :index]
 
   resources :training_employees
   resources :training_abilities
