@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  first_name: MyString
+  last_name: MyString
+  employee: MyString
+  employee_id: 
+  doctor: MyString
+  insurance: MyString
+  down_date: 2017-09-03
+  condition: MyText
+
+two:
+  first_name: MyString
+  last_name: MyString
+  employee: MyString
+  employee_id: 
+  doctor: MyString
+  insurance: MyString
+  down_date: 2017-09-03
+  condition: MyText

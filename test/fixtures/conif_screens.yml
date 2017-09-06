@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  compania: MyString
+  mision: MyText
+  vision: MyText
+
+two:
+  compania: MyString
+  mision: MyText
+  vision: MyText

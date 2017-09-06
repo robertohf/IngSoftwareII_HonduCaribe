@@ -45,6 +45,7 @@ class EmployeesController < ApplicationController
     @hour = @employee.hours.build
     @work_structure_of_employee = WorkStructure.find_by_id(@employee.work_structure_id)
     @abilities_training = @employee.employee_abilities.all
+    @incapacity = @employee.incapacities.build
   end
 
   def new
