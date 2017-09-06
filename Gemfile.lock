@@ -386,7 +386,7 @@ DEPENDENCIES
   byebug
   carrierwave (~> 1.0)
   chartjs-ror
-  coffee-rails (~> 4.1.0)
+  coffee-rails
   fog
   font-awesome-rails
   jbuilder (~> 2.0)
