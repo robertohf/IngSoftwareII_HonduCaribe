@@ -4,7 +4,9 @@
     <div class="left_col scroll-view">
 
       <div class="navbar nav_title" style="border: 0;">
-        <a class="site_title"><%= image_tag "gota.png", style: "width: 48px"%> HonduCaribe </a>
+        <a class="site_title"><%= image_tag "gota.png", style: "width: 45px"%> 
+        <% ConfigScreen.all.each do |config_screen| %>
+        <%=config_screen.compania%> </a> <%end%>
       </div>
       <div class="clearfix"></div>
       <!-- sidebar menu -->

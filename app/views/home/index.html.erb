@@ -3,7 +3,9 @@
   <div class="">
     <div class="page-title">
       <div class="title_left">
-        <h3>HonduCaribe</h3>
+        <% @config_screens.each do |config_screen| %>
+        <h3><%= config_screen.compania %></h3>
+        <%end%>
       </div>
       <div class="title_right">
         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
@@ -18,25 +20,26 @@
     </div>
     <div class="clearfix"></div>
     <div class="row">
-      <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="">
         <div class="x_panel" style="height:500px;">
           <div class="x_title">
             <h2>Bienvenido!</h2>
             <div class="clearfix"></div>
           </div>
-          <div style="padding-left: 600px">
+          <div style="padding-left: 550px">
             <% @config_screens.each do |config_screen| %>
             <%= image_tag config_screen.logo%>
             <%end%>
           </div>
-          <div>
-            <div style="width: 780px; float: left">
+          <br></br><br></br>
+          <div class ="row">
+            <div style="width: 710px; float: left">
               <h3>Nuestra Misión</h3>
               <% @config_screens.each do |config_screen|  %>
               <%= config_screen.mision %>
               <%end%>
             </div>
-            <div style="width: 780px; float: right">
+            <div style="width: 710px; float: right">
               <h3>Nuestra Visión</h3>
               <% @config_screens.each do |config_screen|  %>
               <%= config_screen.vision%>

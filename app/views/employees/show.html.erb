@@ -445,7 +445,8 @@
                                     <th style= "text-align: center">Nombre</th>
                                     <th style= "text-align: center">Condicion</th>
                                     <th style= "text-align: center">Fecha De Baja</th>
-                                    <th> </th>
+                                    <th style= "text-align: center">Doctor</th>
+                                    <th style= "text-align: center">Aseguradora</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -455,6 +456,8 @@
                                         <td><%= f.name %></td>
                                         <td><%= f.condition %></td>
                                         <td><%= nice_date(f.down_date)%></td>
+                                        <td><%= f.doctor %></td>
+                                        <td><%= f.insurance%></td>
                                       </tr>
                                     <%end%>
                                     <%- end %>
